@@ -87,6 +87,13 @@ class SavingsViewModel: ObservableObject {
         saveSavingsJars()
     }
     
+    func deleteSavingsJar(with id: UUID) {
+        if let index = savingsJars.firstIndex(where: { $0.id == id }) {
+            savingsJars.remove(at: index)
+            saveSavingsJars()
+        }
+    }
+    
     func getColorFromString(_ colorString: String) -> Color {
         switch colorString {
         case "red": return .red
@@ -318,6 +325,8 @@ struct SavingsJarDetailView: View {
     @State private var amountToWithdraw: String = ""
     @State private var showingAddMoney = false
     @State private var showingWithdrawMoney = false
+    @State private var showingDeleteConfirmation = false
+    @Environment(\.dismiss) private var dismiss
     
     var color: Color {
         viewModel.getColorFromString(jar.color)
@@ -416,6 +425,24 @@ struct SavingsJarDetailView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                
+                // Delete Jar button
+                VStack {
+                    Divider()
+                        .padding(.vertical)
+                    
+                    Button(action: {
+                        showingDeleteConfirmation = true
+                    }) {
+                        Label("Delete Jar", systemImage: "trash")
+                            .foregroundColor(.red)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color(.windowBackgroundColor).opacity(0.3))
+                            .cornerRadius(8)
+                    }
+                }
+                .padding(.top, 20)
             }
             .padding()
         }
@@ -476,6 +503,15 @@ struct SavingsJarDetailView: View {
             }
             .padding()
             .frame(width: 300)
+        }
+        .alert("Delete Savings Jar", isPresented: $showingDeleteConfirmation) {
+            Button("Cancel", role: .cancel) {}
+            Button("Delete", role: .destructive) {
+                viewModel.deleteSavingsJar(with: jar.id)
+                dismiss()
+            }
+        } message: {
+            Text("Are you sure you want to delete \"\(jar.name)\"? This action cannot be undone.")
         }
     }
 }
@@ -577,6 +613,7 @@ struct CustomAddJarView: View {
                                     .frame(width: 40, height: 40)
                                 
                                 Image(systemName: icon)
+                                    .font(.system(size: 24))  // Explicit font size
                                     .foregroundColor(viewModel.getColorFromString(selectedColor))
                             }
                             .overlay(
