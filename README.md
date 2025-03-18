@@ -1,4 +1,4 @@
-# SavingsJarMacApp
+# Savings Jar Mac App
 
 A modern macOS app to track and manage your savings goals with a beautiful, intuitive interface.
 
