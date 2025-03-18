@@ -1,0 +1,76 @@
+# Savings Jar App Changelog
+
+## [v1.1.0] - Export and Import Update
+
+### Added
+- Export Savings Jars to CSV
+- Import Savings Jars from CSV
+- User-friendly file selection dialogs for CSV export and import
+- Comprehensive transaction history preservation during export/import
+- Error handling and user notifications for import/export processes
+
+### Changed
+- Enhanced CSV export/import method to include detailed jar information
+- Improved error handling for file import/export processes
+
+### Improvements
+- Added robust validation for imported CSV files
+- Implemented safeguards to prevent data loss during import
+- Created user-friendly alerts for import/export operations
+
+## [v1.0.0] - Initial Release
+
+### Core Features
+- Create multiple savings jars
+- Set savings targets
+- Track current savings amount
+- Add deposits and withdrawals
+- Visualize savings progress
+  - Progress bars
+  - Color-coded jar representation
+- Transaction history tracking
+- Persistent local storage
+- User-friendly interface with:
+  - Overview screen
+  - Individual jar details
+  - Transaction management
+
+### Key Functionalities
+- Add new savings jars
+- Edit existing jars
+- Delete savings jars
+- Make deposits
+- Make withdrawals
+- View transaction history
+- Color and icon customization
+
+## Export/Import Implementation Details
+
+### Export Process
+- Converts each savings jar to a CSV row
+- Includes all jar details:
+  - Unique identifier
+  - Jar name
+  - Target amount
+  - Current amount
+  - Color
+  - Icon
+  - Creation date
+  - Transaction history
+
+### Import Process
+- Validates CSV file structure
+- Parses and reconstructs savings jars
+- Preserves transaction history
+- Handles potential parsing errors gracefully
+
+## Known Limitations
+- Currently macOS-specific file dialogs
+- Requires App Sandbox entitlements
+- Replaces entire jar collection on import
+
+## Future Improvements
+- Cross-platform file selection
+- More granular import options
+- Ability to merge imported jars instead of full replacement
+- Enhanced export/import flexibility

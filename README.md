@@ -1,4 +1,4 @@
-# SavingsJarMacApp
+# Savings Jar Mac App
 
 A modern macOS app to track and manage your savings goals with a beautiful, intuitive interface.
 
@@ -77,5 +77,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Inspired by personal finance best practices
 
 ---
-
-Note: Remember to replace "yourusername" with your actual GitHub username and add actual screenshots of your app to the project. You might need to create a "screenshots" folder in your repository and add the images there.
