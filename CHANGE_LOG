@@ -1,7 +1,24 @@
 # Savings Jar App Changelog
 
-## [v1.1.0] - Export and Import Update
+## [v1.2.0] - Widget Update
+### Added
+- macOS desktop widgets for tracking savings goals
+- Progress widget showing individual jar status
+- Summary widget displaying overview of all jars
+- Widget configuration options with customizable appearance
+- Real-time widget updates synchronized with the main app
+- Widget preferences in app settings
 
+### Changed
+- Enhanced data sharing between main app and widgets
+- Improved app architecture to support widget extension
+
+### Improvements
+- Optimized performance for widget updates
+- Added widget-specific color themes
+- Implemented efficient data refresh mechanism
+
+## [v1.1.0] - Export and Import Update
 ### Added
 - Export Savings Jars to CSV
 - Import Savings Jars from CSV
@@ -19,7 +36,6 @@
 - Created user-friendly alerts for import/export operations
 
 ## [v1.0.0] - Initial Release
-
 ### Core Features
 - Create multiple savings jars
 - Set savings targets
@@ -45,7 +61,6 @@
 - Color and icon customization
 
 ## Export/Import Implementation Details
-
 ### Export Process
 - Converts each savings jar to a CSV row
 - Includes all jar details:
@@ -64,13 +79,28 @@
 - Preserves transaction history
 - Handles potential parsing errors gracefully
 
+## Widget Implementation Details
+### Widget Types
+- Progress Widget: Displays progress of individual savings jars
+- Summary Widget: Shows overview of all savings goals
+- Different size options for various user preferences
+
+### Widget Features
+- Live progress bars for visual tracking
+- Color-coded indicators matching jar settings
+- Ability to select which jars appear in widgets
+- Auto-refreshing data synchronized with main app
+
 ## Known Limitations
 - Currently macOS-specific file dialogs
 - Requires App Sandbox entitlements
 - Replaces entire jar collection on import
+- Widgets require macOS 11 or later
 
 ## Future Improvements
 - Cross-platform file selection
 - More granular import options
 - Ability to merge imported jars instead of full replacement
 - Enhanced export/import flexibility
+- Additional widget customization options
+- Interactive widgets with quick-add functionality
