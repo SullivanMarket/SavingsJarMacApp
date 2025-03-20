@@ -11,7 +11,7 @@ A modern macOS app to track and manage your savings goals with a beautiful, intu
 - **macOS Widgets**: Keep track of your savings goals right from your desktop with custom widgets
 
 ## Installation
-1. Download the latest release from the [Releases](https://github.com/ssullivan06902/SavingsJarMacApp/tree/main/Savings%20Jar/Releases) page
+1. Download the latest release from the [Releases](https://github.com/SullivanMarket/SavingsJarMacApp/releases) page
 2. Drag the Savings Jar app to your Applications folder
 3. Launch the app from your Applications folder or Launchpad
 4. To add widgets:
