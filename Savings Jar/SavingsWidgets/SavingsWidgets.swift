@@ -37,8 +37,10 @@ struct SavingsWidgetEntryView: View {
             MediumSavingsWidgetView(entry: entry)
         case .systemLarge:
             LargeSavingsWidgetView(entry: entry)
-        @unknown default:
-            SmallSavingsWidgetView(entry: entry)
+       // @unknown default:
+        //    SmallSavingsWidgetView(entry: entry)
+        default:
+            SmallSavingsWidgetView(entry: entry) // or provide a meaningful default behavior
         }
     }
 }

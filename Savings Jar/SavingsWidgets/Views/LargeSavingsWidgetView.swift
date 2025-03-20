@@ -1,3 +1,10 @@
+//
+//  LargeSavingsWidgets.swift
+//  SavingsWidgets
+//
+//  Created by Sean Sullivan on 3/18/25.
+//
+
 import SwiftUI
 import WidgetKit
 import Foundation
