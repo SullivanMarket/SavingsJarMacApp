@@ -6,7 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		AB174CAE2D8AFDEC002F6E44 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB174CAD2D8AFDEB002F6E44 /* WidgetKit.framework */; };
+		AB174CB02D8AFDEC002F6E44 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB174CAF2D8AFDEC002F6E44 /* SwiftUI.framework */; };
+		ABA2F4C32D8C5934000044EB /* Savings WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AB174CAB2D8AFDEB002F6E44 /* Savings WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
+		ABA2F4BD2D8C54BC000044EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABE100772D88B26200019AA7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AB174CAA2D8AFDEB002F6E44;
+			remoteInfo = "Savings WidgetsExtension";
+		};
+		ABA2F4C02D8C585C000044EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABE100772D88B26200019AA7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AB174CAA2D8AFDEB002F6E44;
+			remoteInfo = "Savings WidgetsExtension";
+		};
 		ABE100912D88B26400019AA7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ABE100772D88B26200019AA7 /* Project object */;
@@ -23,15 +43,85 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		ABA2F4C22D8C585C000044EB /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				ABA2F4C32D8C5934000044EB /* Savings WidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		AB174CAB2D8AFDEB002F6E44 /* Savings WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Savings WidgetsExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB174CAD2D8AFDEB002F6E44 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		AB174CAF2D8AFDEC002F6E44 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		ABA2F4C42D8C5BCC000044EB /* Savings WidgetsExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Savings WidgetsExtensionRelease.entitlements"; sourceTree = "<group>"; };
 		ABE1007F2D88B26200019AA7 /* Savings Jar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Savings Jar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABE100902D88B26400019AA7 /* Savings JarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Savings JarTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABE1009A2D88B26400019AA7 /* Savings JarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Savings JarUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AB174CBD2D8AFDEE002F6E44 /* Exceptions for "Savings Widgets" folder in "Savings WidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = AB174CAA2D8AFDEB002F6E44 /* Savings WidgetsExtension */;
+		};
+		AB174CC32D8B056F002F6E44 /* Exceptions for "Savings Jar" folder in "Savings WidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				SavingsWidgets/Model/SavingsDataProvider.swift,
+				SavingsWidgets/Model/SimplifiedSavingsJar.swift,
+				SavingsWidgets/Model/WidgetSavingsJar.swift,
+				SavingsWidgets/SavingsWidgetBundle.swift,
+				SavingsWidgets/SavingsWidgetProvider.swift,
+				SavingsWidgets/SavingsWidgets.swift,
+				SavingsWidgets/Views/LargeSavingsWidgetView.swift,
+				SavingsWidgets/Views/MediumSavingsWidgetView.swift,
+				SavingsWidgets/Views/SmallSavingsWidgetView.swift,
+			);
+			target = AB174CAA2D8AFDEB002F6E44 /* Savings WidgetsExtension */;
+		};
+		ABA2F4B42D8B1B4A000044EB /* Exceptions for "Savings Jar" folder in "Savings Jar" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				SavingsWidgets/Model/SavingsDataProvider.swift,
+				SavingsWidgets/Model/SimplifiedSavingsJar.swift,
+				SavingsWidgets/Model/WidgetSavingsJar.swift,
+				SavingsWidgets/SavingsWidgetBundle.swift,
+				SavingsWidgets/SavingsWidgetProvider.swift,
+				SavingsWidgets/SavingsWidgets.swift,
+				SavingsWidgets/Views/LargeSavingsWidgetView.swift,
+				SavingsWidgets/Views/MediumSavingsWidgetView.swift,
+				SavingsWidgets/Views/SmallSavingsWidgetView.swift,
+			);
+			target = ABE1007E2D88B26200019AA7 /* Savings Jar */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		AB174CB12D8AFDEC002F6E44 /* Savings Widgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AB174CBD2D8AFDEE002F6E44 /* Exceptions for "Savings Widgets" folder in "Savings WidgetsExtension" target */,
+			);
+			path = "Savings Widgets";
+			sourceTree = "<group>";
+		};
 		ABE100812D88B26200019AA7 /* Savings Jar */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				ABA2F4B42D8B1B4A000044EB /* Exceptions for "Savings Jar" folder in "Savings Jar" target */,
+				AB174CC32D8B056F002F6E44 /* Exceptions for "Savings Jar" folder in "Savings WidgetsExtension" target */,
+			);
 			path = "Savings Jar";
 			sourceTree = "<group>";
 		};
@@ -48,6 +138,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AB174CA82D8AFDEB002F6E44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB174CB02D8AFDEC002F6E44 /* SwiftUI.framework in Frameworks */,
+				AB174CAE2D8AFDEC002F6E44 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABE1007C2D88B26200019AA7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,12 +171,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB174CAC2D8AFDEB002F6E44 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AB174CAD2D8AFDEB002F6E44 /* WidgetKit.framework */,
+				AB174CAF2D8AFDEC002F6E44 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		ABE100762D88B26200019AA7 = {
 			isa = PBXGroup;
 			children = (
+				ABA2F4C42D8C5BCC000044EB /* Savings WidgetsExtensionRelease.entitlements */,
 				ABE100812D88B26200019AA7 /* Savings Jar */,
 				ABE100932D88B26400019AA7 /* Savings JarTests */,
 				ABE1009D2D88B26400019AA7 /* Savings JarUITests */,
+				AB174CB12D8AFDEC002F6E44 /* Savings Widgets */,
+				AB174CAC2D8AFDEB002F6E44 /* Frameworks */,
 				ABE100802D88B26200019AA7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,6 +199,7 @@
 				ABE1007F2D88B26200019AA7 /* Savings Jar.app */,
 				ABE100902D88B26400019AA7 /* Savings JarTests.xctest */,
 				ABE1009A2D88B26400019AA7 /* Savings JarUITests.xctest */,
+				AB174CAB2D8AFDEB002F6E44 /* Savings WidgetsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,6 +207,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AB174CAA2D8AFDEB002F6E44 /* Savings WidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB174CBE2D8AFDEE002F6E44 /* Build configuration list for PBXNativeTarget "Savings WidgetsExtension" */;
+			buildPhases = (
+				AB174CA72D8AFDEB002F6E44 /* Sources */,
+				AB174CA82D8AFDEB002F6E44 /* Frameworks */,
+				AB174CA92D8AFDEB002F6E44 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AB174CB12D8AFDEC002F6E44 /* Savings Widgets */,
+			);
+			name = "Savings WidgetsExtension";
+			packageProductDependencies = (
+			);
+			productName = "Savings WidgetsExtension";
+			productReference = AB174CAB2D8AFDEB002F6E44 /* Savings WidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		ABE1007E2D88B26200019AA7 /* Savings Jar */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ABE100A42D88B26400019AA7 /* Build configuration list for PBXNativeTarget "Savings Jar" */;
@@ -102,10 +236,13 @@
 				ABE1007B2D88B26200019AA7 /* Sources */,
 				ABE1007C2D88B26200019AA7 /* Frameworks */,
 				ABE1007D2D88B26200019AA7 /* Resources */,
+				ABA2F4C22D8C585C000044EB /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				ABA2F4BE2D8C54BC000044EB /* PBXTargetDependency */,
+				ABA2F4C12D8C585C000044EB /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				ABE100812D88B26200019AA7 /* Savings Jar */,
@@ -173,6 +310,9 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					AB174CAA2D8AFDEB002F6E44 = {
+						CreatedOnToolsVersion = 16.2;
+					};
 					ABE1007E2D88B26200019AA7 = {
 						CreatedOnToolsVersion = 16.2;
 						LastSwiftMigration = 1620;
@@ -204,11 +344,19 @@
 				ABE1007E2D88B26200019AA7 /* Savings Jar */,
 				ABE1008F2D88B26400019AA7 /* Savings JarTests */,
 				ABE100992D88B26400019AA7 /* Savings JarUITests */,
+				AB174CAA2D8AFDEB002F6E44 /* Savings WidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AB174CA92D8AFDEB002F6E44 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABE1007D2D88B26200019AA7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -233,6 +381,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AB174CA72D8AFDEB002F6E44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABE1007B2D88B26200019AA7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -257,6 +412,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		ABA2F4BE2D8C54BC000044EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AB174CAA2D8AFDEB002F6E44 /* Savings WidgetsExtension */;
+			targetProxy = ABA2F4BD2D8C54BC000044EB /* PBXContainerItemProxy */;
+		};
+		ABA2F4C12D8C585C000044EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AB174CAA2D8AFDEB002F6E44 /* Savings WidgetsExtension */;
+			targetProxy = ABA2F4C02D8C585C000044EB /* PBXContainerItemProxy */;
+		};
 		ABE100922D88B26400019AA7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = ABE1007E2D88B26200019AA7 /* Savings Jar */;
@@ -270,6 +435,65 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		AB174CBF2D8AFDEE002F6E44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Savings Widgets/Savings_Widgets.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.2.0;
+				DEVELOPMENT_TEAM = F834LV38QX;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Savings Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Savings WidgetsExtension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/PlugIns";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Savings-Jar.Savings-Widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		AB174CC02D8AFDEE002F6E44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Savings Widgets/Savings_Widgets.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.2.0;
+				DEVELOPMENT_TEAM = F834LV38QX;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Savings Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Savings WidgetsExtension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/PlugIns";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Savings-Jar.Savings-Widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		ABE100A22D88B26400019AA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -398,9 +622,10 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.2.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Savings Jar/Preview Content\"";
 				DEVELOPMENT_TEAM = F834LV38QX;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -408,7 +633,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Savings-Jar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -428,9 +653,10 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.2.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Savings Jar/Preview Content\"";
 				DEVELOPMENT_TEAM = F834LV38QX;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -438,7 +664,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Savings-Jar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -514,6 +740,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AB174CBE2D8AFDEE002F6E44 /* Build configuration list for PBXNativeTarget "Savings WidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB174CBF2D8AFDEE002F6E44 /* Debug */,
+				AB174CC02D8AFDEE002F6E44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		ABE1007A2D88B26200019AA7 /* Build configuration list for PBXProject "Savings Jar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
