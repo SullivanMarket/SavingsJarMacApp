@@ -1,0 +1,768 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ABF712AC2D96102A00E2DEA9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF712AB2D96102A00E2DEA9 /* WidgetKit.framework */; };
+		ABF712AE2D96102A00E2DEA9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF712AD2D96102A00E2DEA9 /* SwiftUI.framework */; };
+		ABF712BA2D96102C00E2DEA9 /* MySavingsWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = ABF712A92D96102A00E2DEA9 /* MySavingsWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ABF712892D960FCC00E2DEA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF7126F2D960FCA00E2DEA9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABF712762D960FCA00E2DEA9;
+			remoteInfo = "My Savings Jars";
+		};
+		ABF712932D960FCC00E2DEA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF7126F2D960FCA00E2DEA9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABF712762D960FCA00E2DEA9;
+			remoteInfo = "My Savings Jars";
+		};
+		ABF712B82D96102C00E2DEA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF7126F2D960FCA00E2DEA9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABF712A82D96102A00E2DEA9;
+			remoteInfo = MySavingsWidgetsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		ABF712BF2D96102C00E2DEA9 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				ABF712BA2D96102C00E2DEA9 /* MySavingsWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		ABF712772D960FCA00E2DEA9 /* My Savings Jars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Savings Jars.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABF712882D960FCC00E2DEA9 /* My Savings JarsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "My Savings JarsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABF712922D960FCC00E2DEA9 /* My Savings JarsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "My Savings JarsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABF712A92D96102A00E2DEA9 /* MySavingsWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MySavingsWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABF712AB2D96102A00E2DEA9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		ABF712AD2D96102A00E2DEA9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		ABA1E3932D96297B0075D704 /* Exceptions for "My Savings Jars" folder in "My Savings Jars" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				SavingsWidgets/SavingsWidgetEntry.swift,
+				SavingsWidgets/SavingsWidgetIntent.swift,
+				SavingsWidgets/SavingsWidgetProvider.swift,
+				SavingsWidgets/SavingsWidgets.swift,
+				SavingsWidgets/Views/LargeSavingsWidgetView.swift,
+				SavingsWidgets/Views/MediumSavingsWidgetView.swift,
+				SavingsWidgets/Views/SmallSavingsWidgetView.swift,
+			);
+			target = ABF712762D960FCA00E2DEA9 /* My Savings Jars */;
+		};
+		ABA1E3942D96297B0075D704 /* Exceptions for "My Savings Jars" folder in "MySavingsWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				SavingsWidgets/Model/SimplifiedSavingsJar.swift,
+				SavingsWidgets/SavingsWidgetEntry.swift,
+				SavingsWidgets/SavingsWidgetIntent.swift,
+				SavingsWidgets/SavingsWidgetProvider.swift,
+				SavingsWidgets/SavingsWidgets.swift,
+				SavingsWidgets/Views/LargeSavingsWidgetView.swift,
+				SavingsWidgets/Views/MediumSavingsWidgetView.swift,
+				SavingsWidgets/Views/SmallSavingsWidgetView.swift,
+				Shared/SavingsDataProvider.swift,
+				Shared/SharedModels.swift,
+			);
+			target = ABF712A82D96102A00E2DEA9 /* MySavingsWidgetsExtension */;
+		};
+		ABF712BB2D96102C00E2DEA9 /* Exceptions for "MySavingsWidgets" folder in "MySavingsWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = ABF712A82D96102A00E2DEA9 /* MySavingsWidgetsExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		ABF712792D960FCA00E2DEA9 /* My Savings Jars */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				ABA1E3932D96297B0075D704 /* Exceptions for "My Savings Jars" folder in "My Savings Jars" target */,
+				ABA1E3942D96297B0075D704 /* Exceptions for "My Savings Jars" folder in "MySavingsWidgetsExtension" target */,
+			);
+			path = "My Savings Jars";
+			sourceTree = "<group>";
+		};
+		ABF7128B2D960FCC00E2DEA9 /* My Savings JarsTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "My Savings JarsTests";
+			sourceTree = "<group>";
+		};
+		ABF712952D960FCC00E2DEA9 /* My Savings JarsUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "My Savings JarsUITests";
+			sourceTree = "<group>";
+		};
+		ABF712AF2D96102B00E2DEA9 /* MySavingsWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				ABF712BB2D96102C00E2DEA9 /* Exceptions for "MySavingsWidgets" folder in "MySavingsWidgetsExtension" target */,
+			);
+			path = MySavingsWidgets;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ABF712742D960FCA00E2DEA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABF712852D960FCC00E2DEA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABF7128F2D960FCC00E2DEA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABF712A62D96102A00E2DEA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABF712AE2D96102A00E2DEA9 /* SwiftUI.framework in Frameworks */,
+				ABF712AC2D96102A00E2DEA9 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ABF7126E2D960FCA00E2DEA9 = {
+			isa = PBXGroup;
+			children = (
+				ABF712792D960FCA00E2DEA9 /* My Savings Jars */,
+				ABF7128B2D960FCC00E2DEA9 /* My Savings JarsTests */,
+				ABF712952D960FCC00E2DEA9 /* My Savings JarsUITests */,
+				ABF712AF2D96102B00E2DEA9 /* MySavingsWidgets */,
+				ABF712AA2D96102A00E2DEA9 /* Frameworks */,
+				ABF712782D960FCA00E2DEA9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ABF712782D960FCA00E2DEA9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABF712772D960FCA00E2DEA9 /* My Savings Jars.app */,
+				ABF712882D960FCC00E2DEA9 /* My Savings JarsTests.xctest */,
+				ABF712922D960FCC00E2DEA9 /* My Savings JarsUITests.xctest */,
+				ABF712A92D96102A00E2DEA9 /* MySavingsWidgetsExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ABF712AA2D96102A00E2DEA9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ABF712AB2D96102A00E2DEA9 /* WidgetKit.framework */,
+				ABF712AD2D96102A00E2DEA9 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ABF712762D960FCA00E2DEA9 /* My Savings Jars */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABF7129C2D960FCC00E2DEA9 /* Build configuration list for PBXNativeTarget "My Savings Jars" */;
+			buildPhases = (
+				ABF712732D960FCA00E2DEA9 /* Sources */,
+				ABF712742D960FCA00E2DEA9 /* Frameworks */,
+				ABF712752D960FCA00E2DEA9 /* Resources */,
+				ABF712BF2D96102C00E2DEA9 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ABF712B92D96102C00E2DEA9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				ABF712792D960FCA00E2DEA9 /* My Savings Jars */,
+			);
+			name = "My Savings Jars";
+			packageProductDependencies = (
+			);
+			productName = "My Savings Jars";
+			productReference = ABF712772D960FCA00E2DEA9 /* My Savings Jars.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ABF712872D960FCC00E2DEA9 /* My Savings JarsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABF7129F2D960FCC00E2DEA9 /* Build configuration list for PBXNativeTarget "My Savings JarsTests" */;
+			buildPhases = (
+				ABF712842D960FCC00E2DEA9 /* Sources */,
+				ABF712852D960FCC00E2DEA9 /* Frameworks */,
+				ABF712862D960FCC00E2DEA9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ABF7128A2D960FCC00E2DEA9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				ABF7128B2D960FCC00E2DEA9 /* My Savings JarsTests */,
+			);
+			name = "My Savings JarsTests";
+			packageProductDependencies = (
+			);
+			productName = "My Savings JarsTests";
+			productReference = ABF712882D960FCC00E2DEA9 /* My Savings JarsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		ABF712912D960FCC00E2DEA9 /* My Savings JarsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABF712A22D960FCC00E2DEA9 /* Build configuration list for PBXNativeTarget "My Savings JarsUITests" */;
+			buildPhases = (
+				ABF7128E2D960FCC00E2DEA9 /* Sources */,
+				ABF7128F2D960FCC00E2DEA9 /* Frameworks */,
+				ABF712902D960FCC00E2DEA9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ABF712942D960FCC00E2DEA9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				ABF712952D960FCC00E2DEA9 /* My Savings JarsUITests */,
+			);
+			name = "My Savings JarsUITests";
+			packageProductDependencies = (
+			);
+			productName = "My Savings JarsUITests";
+			productReference = ABF712922D960FCC00E2DEA9 /* My Savings JarsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		ABF712A82D96102A00E2DEA9 /* MySavingsWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABF712BC2D96102C00E2DEA9 /* Build configuration list for PBXNativeTarget "MySavingsWidgetsExtension" */;
+			buildPhases = (
+				ABF712A52D96102A00E2DEA9 /* Sources */,
+				ABF712A62D96102A00E2DEA9 /* Frameworks */,
+				ABF712A72D96102A00E2DEA9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				ABF712AF2D96102B00E2DEA9 /* MySavingsWidgets */,
+			);
+			name = MySavingsWidgetsExtension;
+			packageProductDependencies = (
+			);
+			productName = MySavingsWidgetsExtension;
+			productReference = ABF712A92D96102A00E2DEA9 /* MySavingsWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ABF7126F2D960FCA00E2DEA9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					ABF712762D960FCA00E2DEA9 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					ABF712872D960FCC00E2DEA9 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = ABF712762D960FCA00E2DEA9;
+					};
+					ABF712912D960FCC00E2DEA9 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = ABF712762D960FCA00E2DEA9;
+					};
+					ABF712A82D96102A00E2DEA9 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = ABF712722D960FCA00E2DEA9 /* Build configuration list for PBXProject "My Savings Jars" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ABF7126E2D960FCA00E2DEA9;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = ABF712782D960FCA00E2DEA9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ABF712762D960FCA00E2DEA9 /* My Savings Jars */,
+				ABF712872D960FCC00E2DEA9 /* My Savings JarsTests */,
+				ABF712912D960FCC00E2DEA9 /* My Savings JarsUITests */,
+				ABF712A82D96102A00E2DEA9 /* MySavingsWidgetsExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ABF712752D960FCA00E2DEA9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABF712862D960FCC00E2DEA9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABF712902D960FCC00E2DEA9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABF712A72D96102A00E2DEA9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ABF712732D960FCA00E2DEA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABF712842D960FCC00E2DEA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABF7128E2D960FCC00E2DEA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABF712A52D96102A00E2DEA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ABF7128A2D960FCC00E2DEA9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABF712762D960FCA00E2DEA9 /* My Savings Jars */;
+			targetProxy = ABF712892D960FCC00E2DEA9 /* PBXContainerItemProxy */;
+		};
+		ABF712942D960FCC00E2DEA9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABF712762D960FCA00E2DEA9 /* My Savings Jars */;
+			targetProxy = ABF712932D960FCC00E2DEA9 /* PBXContainerItemProxy */;
+		};
+		ABF712B92D96102C00E2DEA9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABF712A82D96102A00E2DEA9 /* MySavingsWidgetsExtension */;
+			targetProxy = ABF712B82D96102C00E2DEA9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		ABF7129A2D960FCC00E2DEA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		ABF7129B2D960FCC00E2DEA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		ABF7129D2D960FCC00E2DEA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "My Savings Jars/My_Savings_Jars.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.3.0;
+				DEVELOPMENT_ASSET_PATHS = "\"My Savings Jars/Preview Content\"";
+				DEVELOPMENT_TEAM = F834LV38QX;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Sullivan-Market-LLC.My-Savings-Jars";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		ABF7129E2D960FCC00E2DEA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "My Savings Jars/My_Savings_Jars.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.3.0;
+				DEVELOPMENT_ASSET_PATHS = "\"My Savings Jars/Preview Content\"";
+				DEVELOPMENT_TEAM = F834LV38QX;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Sullivan-Market-LLC.My-Savings-Jars";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		ABF712A02D960FCC00E2DEA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F834LV38QX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Sullivan-Market-LLC.My-Savings-JarsTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/My Savings Jars.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/My Savings Jars";
+			};
+			name = Debug;
+		};
+		ABF712A12D960FCC00E2DEA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F834LV38QX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Sullivan-Market-LLC.My-Savings-JarsTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/My Savings Jars.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/My Savings Jars";
+			};
+			name = Release;
+		};
+		ABF712A32D960FCC00E2DEA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F834LV38QX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Sullivan-Market-LLC.My-Savings-JarsUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "My Savings Jars";
+			};
+			name = Debug;
+		};
+		ABF712A42D960FCC00E2DEA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F834LV38QX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Sullivan-Market-LLC.My-Savings-JarsUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "My Savings Jars";
+			};
+			name = Release;
+		};
+		ABF712BD2D96102C00E2DEA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MySavingsWidgets/MySavingsWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.3.1;
+				DEVELOPMENT_TEAM = F834LV38QX;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MySavingsWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MySavingsWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Sullivan-Market-LLC.My-Savings-Jars.MySavingsWidgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		ABF712BE2D96102C00E2DEA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MySavingsWidgets/MySavingsWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.3.1;
+				DEVELOPMENT_TEAM = F834LV38QX;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MySavingsWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MySavingsWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Sullivan-Market-LLC.My-Savings-Jars.MySavingsWidgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ABF712722D960FCA00E2DEA9 /* Build configuration list for PBXProject "My Savings Jars" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABF7129A2D960FCC00E2DEA9 /* Debug */,
+				ABF7129B2D960FCC00E2DEA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABF7129C2D960FCC00E2DEA9 /* Build configuration list for PBXNativeTarget "My Savings Jars" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABF7129D2D960FCC00E2DEA9 /* Debug */,
+				ABF7129E2D960FCC00E2DEA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABF7129F2D960FCC00E2DEA9 /* Build configuration list for PBXNativeTarget "My Savings JarsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABF712A02D960FCC00E2DEA9 /* Debug */,
+				ABF712A12D960FCC00E2DEA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABF712A22D960FCC00E2DEA9 /* Build configuration list for PBXNativeTarget "My Savings JarsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABF712A32D960FCC00E2DEA9 /* Debug */,
+				ABF712A42D960FCC00E2DEA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABF712BC2D96102C00E2DEA9 /* Build configuration list for PBXNativeTarget "MySavingsWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABF712BD2D96102C00E2DEA9 /* Debug */,
+				ABF712BE2D96102C00E2DEA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ABF7126F2D960FCA00E2DEA9 /* Project object */;
+}
