@@ -10,5 +10,6 @@ import Foundation
 
 struct SavingsWidgetEntry: TimelineEntry {
     let date: Date
-    let widgetData: WidgetData // ✅ Ensure WidgetData is correctly declared
+    let widgetData: WidgetData
+    let eligibleJars: [SavingsJar]
 }

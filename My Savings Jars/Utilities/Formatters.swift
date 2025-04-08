@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-//import Savings_Jar
 
 // MARK: - Formatters
 class CurrencyFormatter {

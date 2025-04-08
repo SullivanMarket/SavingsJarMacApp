@@ -96,8 +96,8 @@ struct SavingsJarCard_Previews: PreviewProvider {
         let viewModel = SavingsViewModel()
         let sampleJar = SavingsJar(
             name: "Vacation Fund",
+            currentAmount: 2500, // <-- this goes first now
             targetAmount: 5000,
-            currentAmount: 2500,
             color: "blue",
             icon: "airplane"
         )

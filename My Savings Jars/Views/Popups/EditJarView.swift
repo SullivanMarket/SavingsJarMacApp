@@ -1,9 +1,7 @@
-//
 //  EditJarView.swift
 //  Savings Jar
 //
 //  Created by Sean Sullivan on 3/29/25.
-//
 
 import SwiftUI
 
@@ -11,14 +9,26 @@ struct EditJarView: View {
     @ObservedObject var viewModel: SavingsViewModel
     let jar: SavingsJar
     @Binding var isPresented: Bool
-    
+
     @State private var name: String
     @State private var targetAmount: String
     @State private var selectedColor: String
     @State private var selectedIcon: String
-    
+    @State private var showInWidget: Bool
+
     let colors = ["blue", "purple", "red", "green", "orange", "yellow"]
-    let icons = ["banknote.fill", "dollarsign.circle.fill", "house.fill", "car.fill", "airplane", "gift.fill", "heart.circle", "star.fill", "briefcase.fill", "graduationcap.fill", "cart.fill", "cross.fill", "book.fill", "desktopcomputer", "gamecontroller.fill", "tray.fill", "creditcard.fill", "bag.fill", "leaf.fill", "building.fill"]
+    let icons = [
+        "banknote.fill", "dollarsign.circle.fill", "house.fill", "car.fill", "airplane",
+        "gift.fill", "heart.circle", "star.fill", "briefcase.fill", "graduationcap.fill",
+        "cart.fill", "cross.fill", "book.fill", "desktopcomputer", "gamecontroller.fill",
+        "tray.fill", "creditcard.fill", "bag.fill", "leaf.fill", "building.fill",
+        "globe", "camera.fill", "pawprint.fill", "music.note", "tv.fill",
+        "fork.knife", "umbrella.fill", "snowflake", "flag.fill", "bell.fill",
+        "bicycle", "bed.double.fill", "tshirt.fill", "tag.fill", "sunglasses",
+        "phone.fill", "wrench.fill", "hammer.fill", "paintbrush.fill", "bandage.fill",
+        "key.fill", "crown.fill", "theatermasks.fill", "ticket.fill", "film.fill",
+        "facemask.fill", "stethoscope", "flashlight.off.fill", "lightbulb.fill", "cloud.fill"
+    ]
 
     init(viewModel: SavingsViewModel, jar: SavingsJar, isPresented: Binding<Bool>) {
         self.viewModel = viewModel
@@ -28,74 +38,85 @@ struct EditJarView: View {
         self._targetAmount = State(initialValue: "\(jar.targetAmount)")
         self._selectedColor = State(initialValue: jar.color)
         self._selectedIcon = State(initialValue: jar.icon)
+        self._showInWidget = State(initialValue: jar.showInWidget)
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            // Title bar with blue background - positioned at the top edge
             Rectangle()
                 .fill(Color.blue)
-                .frame(height: 60)
+                .frame(height: 50)
                 .overlay(
                     Text("Edit Savings Jar")
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                 )
-            
-            // Content - Not scrollable as a whole
-            VStack(spacing: 15) {
-                // Name field
+
+            VStack(spacing: 10) {
                 TextField("Name", text: $name)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
-                    .padding(.top, 15)
-                
-                // Target amount field
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .padding(8)
+                    .multilineTextAlignment(.center)
+                    .frame(height: 40)
+                    .frame(width: 250)
+                    .background(Color(.textBackgroundColor))
+                    .cornerRadius(8)
+                    .padding(.top, 10)
+
                 TextField("Target Amount", text: $targetAmount)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
-                    .onReceive(NotificationCenter.default.publisher(for: NSTextField.textDidChangeNotification)) { _ in
-                        targetAmount = targetAmount.filter { "0123456789.".contains($0) }
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .padding(8)
+                    .multilineTextAlignment(.center)
+                    .frame(height: 40)
+                    .frame(width: 250)
+                    .background(Color(.textBackgroundColor))
+                    .cornerRadius(8)
+                    .onReceive(targetAmount.publisher.collect()) {
+                        targetAmount = String($0.prefix(10)).filter { "0123456789.".contains($0) }
                     }
-                
-                // Color selection
-                VStack(alignment: .center, spacing: 8) {
+
+                Toggle("Show in Small Widget", isOn: $showInWidget)
+                    .padding(.top, 5)
+
+                VStack(spacing: 2) {
                     Text("Color")
-                        .font(.headline)
-                    
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+
                     HStack(spacing: 12) {
+                        Spacer()
                         ForEach(colors, id: \.self) { color in
                             Circle()
                                 .fill(getColor(color))
                                 .frame(width: 32, height: 32)
                                 .overlay(
                                     Circle()
-                                        .stroke(Color.black, lineWidth: selectedColor == color ? 2 : 0)
+                                        .stroke(Color.primary, lineWidth: selectedColor == color ? 2 : 0)
+                                        .padding(1)
                                 )
                                 .onTapGesture {
                                     selectedColor = color
                                 }
                         }
+                        Spacer()
                     }
                 }
-                .padding(.horizontal)
-                
-                // Icon selection - Only this part is scrollable
-                VStack(alignment: .center, spacing: 8) {
+
+                VStack(spacing: 2) {
                     Text("Icon")
-                        .font(.headline)
-                    
-                    // Scrollable icon grid with fixed height
-                    ScrollView {
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+
+                    ScrollView(.vertical, showsIndicators: false) {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 10) {
                             ForEach(icons, id: \.self) { icon in
                                 Image(systemName: icon)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 32, height: 32)
+                                    .frame(width: 30, height: 30)
                                     .padding(8)
-                                    .background(Color.gray.opacity(0.1))
+                                    .background(Color.blue.opacity(0.1))
                                     .cornerRadius(8)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 8)
@@ -106,15 +127,13 @@ struct EditJarView: View {
                                     }
                             }
                         }
-                        .padding(.horizontal)
+                        .padding(.horizontal, 5)
                     }
-                    .frame(height: 240) // Reduced height to make room for buttons
+                    .frame(height: 220)
                 }
-                .padding(.horizontal)
-                
-                Spacer(minLength: 20) // This ensures there's space for the buttons
-                
-                // Action buttons at the bottom of the content area
+
+                Spacer(minLength: 0)
+
                 HStack(spacing: 20) {
                     Button(action: {
                         isPresented = false
@@ -123,11 +142,11 @@ struct EditJarView: View {
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
-                            .padding()
+                            .padding(.vertical, 12)
                             .background(Capsule().fill(Color.red))
                     }
                     .buttonStyle(PlainButtonStyle())
-                    
+
                     Button(action: {
                         saveChanges()
                     }) {
@@ -135,7 +154,7 @@ struct EditJarView: View {
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
-                            .padding()
+                            .padding(.vertical, 12)
                             .background(Capsule().fill(Color.blue))
                     }
                     .buttonStyle(PlainButtonStyle())
@@ -143,16 +162,16 @@ struct EditJarView: View {
                     .opacity(name.isEmpty || targetAmount.isEmpty ? 0.7 : 1.0)
                 }
                 .padding(.horizontal)
-                .padding(.bottom, 20) // Add padding below the buttons
+                .padding(.bottom, 15)
             }
-            .padding(.vertical, 0) // Remove vertical padding to ensure blue bar stays at top
+            .padding(.horizontal)
         }
         .background(Color(.windowBackgroundColor))
         .cornerRadius(12)
         .frame(width: 400, height: 600)
-        .clipped() // This ensures content doesn't overflow the frame
+        .clipped()
     }
-    
+
     private func getColor(_ colorString: String) -> Color {
         switch colorString {
         case "red": return .red
@@ -164,23 +183,24 @@ struct EditJarView: View {
         default: return .blue
         }
     }
-    
+
     private func saveChanges() {
         guard let target = Double(targetAmount), target > 0 else {
             return
         }
-        
+
         let updatedJar = SavingsJar(
             id: jar.id,
             name: name,
-            targetAmount: target,
             currentAmount: jar.currentAmount,
+            targetAmount: target,
             color: selectedColor,
             icon: selectedIcon,
-            creationDate: jar.creationDate,
-            transactions: jar.transactions
+            transactions: jar.transactions,
+            showInWidget: showInWidget,
+            creationDate: jar.creationDate
         )
-        
+
         viewModel.updateSavingsJar(updatedJar: updatedJar)
         isPresented = false
     }

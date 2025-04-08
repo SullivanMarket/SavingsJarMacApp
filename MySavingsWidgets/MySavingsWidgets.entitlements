@@ -8,5 +8,9 @@
 	<array>
 		<string>group.com.sullivanmarket.savingsjar</string>
 	</array>
+	<key>com.apple.security.files.downloads.read-write</key>
+	<true/>
+	<key>com.apple.security.files.user-selected.read-write</key>
+	<true/>
 </dict>
 </plist>

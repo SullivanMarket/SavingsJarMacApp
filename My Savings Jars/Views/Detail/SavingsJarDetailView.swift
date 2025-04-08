@@ -11,8 +11,9 @@ struct SavingsJarDetailView: View {
     @ObservedObject var viewModel: SavingsViewModel
     let jar: SavingsJar
     @Environment(\.presentationMode) var presentationMode
-    
-    // Helper method to get color
+
+    @State private var showingDeleteConfirmation = false
+
     private func getJarColor() -> Color {
         switch jar.color {
         case "red": return .red
@@ -24,55 +25,52 @@ struct SavingsJarDetailView: View {
         default: return .blue
         }
     }
-    
-    @State private var selectedAmount: String = ""
-    @State private var isAddingTransaction = false
-    @State private var showingDeleteConfirmation = false
-    
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Jar Header
+                // Header
                 HStack {
                     Image(systemName: jar.icon)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 50, height: 50)
                         .foregroundColor(getJarColor())
-                    
+
                     VStack(alignment: .leading) {
                         Text(jar.name)
                             .font(.title)
                             .fontWeight(.bold)
-                        
+
                         Text("Created \(jar.creationDate, style: .date)")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
-                    
+
                     Spacer()
                 }
-                
-                // Progress Section
+
+                // Progress
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Progress")
                         .font(.headline)
-                    
+
                     GeometryReader { geometry in
+                        let width = geometry.size.width
+                        let filled = CGFloat(jar.percentComplete) * width
+
                         ZStack(alignment: .leading) {
-                            Rectangle()
+                            RoundedRectangle(cornerRadius: 10)
                                 .fill(getJarColor().opacity(0.2))
-                                .frame(width: geometry.size.width, height: 20)
-                                .cornerRadius(10)
-                            
-                            Rectangle()
+                                .frame(height: 20)
+
+                            RoundedRectangle(cornerRadius: 10)
                                 .fill(getJarColor())
-                                .frame(width: geometry.size.width * CGFloat(jar.percentComplete), height: 20)
-                                .cornerRadius(10)
+                                .frame(width: filled, height: 20)
                         }
                     }
                     .frame(height: 20)
-                    
+
                     HStack {
                         Text("$\(jar.currentAmount, specifier: "%.2f")")
                         Spacer()
@@ -80,36 +78,33 @@ struct SavingsJarDetailView: View {
                     }
                     .font(.subheadline)
                 }
-                
+
                 // Transaction Button
-                Button(action: {
-                    // Directly set transaction properties
+                Button("Add Transaction") {
                     viewModel.selectedJarForTransaction = jar
                     viewModel.showingTransactionPopup = true
-                }) {
-                    Text("Add Transaction")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(getJarColor())
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
                 }
-                
-                // Transactions List
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(getJarColor())
+                .foregroundColor(.white)
+                .cornerRadius(10)
+
+                // Transactions
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Transactions")
                         .font(.headline)
-                    
+
                     if jar.transactions.isEmpty {
                         Text("No transactions yet")
                             .foregroundColor(.secondary)
                     } else {
-                        ForEach(jar.transactions) { transaction in
+                        ForEach(jar.transactions) { tx in
                             HStack {
-                                Text(transaction.date, style: .date)
+                                Text(tx.date, style: .date)
                                 Spacer()
-                                Text("$\(transaction.amount, specifier: "%.2f")")
-                                    .foregroundColor(transaction.isDeposit ? .green : .red)
+                                Text("$\(tx.amount, specifier: "%.2f")")
+                                    .foregroundColor(tx.amount >= 0 ? .green : .red)
                             }
                             .padding(.vertical, 4)
                             .background(Color.gray.opacity(0.1))
@@ -117,24 +112,21 @@ struct SavingsJarDetailView: View {
                         }
                     }
                 }
-                
-                // Delete Jar Button
-                Button(action: {
+
+                // Delete
+                Button("Delete Jar") {
                     showingDeleteConfirmation = true
-                }) {
-                    Text("Delete Jar")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
                 }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.red)
+                .foregroundColor(.white)
+                .cornerRadius(10)
             }
             .padding()
         }
-        .confirmationDialog("Are you sure?", isPresented: $showingDeleteConfirmation, titleVisibility: .visible) {
+        .confirmationDialog("Are you sure?", isPresented: $showingDeleteConfirmation) {
             Button("Delete Jar", role: .destructive) {
-                // Find the index of the jar and delete
                 if let index = viewModel.savingsJars.firstIndex(where: { $0.id == jar.id }) {
                     viewModel.savingsJars.remove(at: index)
                     viewModel.saveDataToUserDefaults()
@@ -149,20 +141,18 @@ struct SavingsJarDetailView: View {
     }
 }
 
-// Preview Provider
 struct SavingsJarDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = SavingsViewModel()
-        let sampleJar = SavingsJar(
+        let jar = SavingsJar(
             name: "Vacation Fund",
-            targetAmount: 5000,
-            currentAmount: 2500,
+            currentAmount: 500,
+            targetAmount: 1000,
             color: "blue",
             icon: "airplane"
         )
-        
         return NavigationView {
-            SavingsJarDetailView(viewModel: viewModel, jar: sampleJar)
+            SavingsJarDetailView(viewModel: viewModel, jar: jar)
         }
     }
 }

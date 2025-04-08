@@ -9,35 +9,39 @@ import Foundation
 
 class SavingsDataProvider {
     static let shared = SavingsDataProvider()
-    
-    private let appGroupIdentifier = "group.com.sullivanmarket.savingsjar"
 
-    func getWidgetData() -> WidgetData {
-        print("🔄 Loading Widget Data...")
+    private let fileName = "savingsJars.json"
 
-        guard let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupIdentifier) else {
-            print("❌ ERROR: Widget CANNOT access App Group.")
-            return WidgetData(selectedJarID: nil, allJars: [], lastUpdated: Date())
-        }
-
-        let savingsJarsFilePath = containerURL.appendingPathComponent("Savings Jar/savingsJars.json")
-
-        guard FileManager.default.fileExists(atPath: savingsJarsFilePath.path) else {
-            print("⚠️ No savingsJars.json file found at \(savingsJarsFilePath.path)")
-            return WidgetData(selectedJarID: nil, allJars: [], lastUpdated: Date())
+    // Load jars from the shared app group container
+    func load() -> [SavingsJar] {
+        guard let data = AppGroupFileManager.shared.load(from: fileName) else {
+            print("📦 No saved jars found in AppGroup container")
+            return []
         }
 
         do {
-            let data = try Data(contentsOf: savingsJarsFilePath)
             let decoder = JSONDecoder()
-            let jars = try decoder.decode([WidgetJarData].self, from: data)
-
-            print("✅ Successfully loaded \(jars.count) jars for the widget.")
-            return WidgetData(selectedJarID: nil, allJars: jars, lastUpdated: Date())
-
+            decoder.dateDecodingStrategy = .secondsSince1970
+            let jars = try decoder.decode([SavingsJar].self, from: data)
+            print("✅ Loaded \(jars.count) jars from shared container")
+            return jars
         } catch {
-            print("❌ ERROR loading widget data: \(error.localizedDescription)")
-            return WidgetData(selectedJarID: nil, allJars: [], lastUpdated: Date())
+            print("❌ Failed to decode jars from shared container: \(error)")
+            return []
+        }
+    }
+
+    // Save jars to the shared app group container
+    func save(_ jars: [SavingsJar]) {
+        do {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            encoder.dateEncodingStrategy = .secondsSince1970
+            let data = try encoder.encode(jars)
+            AppGroupFileManager.shared.save(data: data, to: fileName)
+            print("✅ Saved \(jars.count) jars to shared container")
+        } catch {
+            print("❌ Failed to encode jars: \(error)")
         }
     }
 }

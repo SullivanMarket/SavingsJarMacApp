@@ -15,13 +15,24 @@ struct CustomAddJarView: View {
     @State private var targetAmount: String = ""
     @State private var selectedColor: String = "blue"
     @State private var selectedIcon: String = "banknote.fill"
+    @State private var showInWidget: Bool = false
 
     let colors = ["blue", "purple", "red", "green", "orange", "yellow"]
-    let icons = ["banknote.fill", "dollarsign.circle.fill", "house.fill", "car.fill", "airplane", "gift.fill", "heart.circle", "star.fill", "briefcase.fill", "graduationcap.fill", "cart.fill", "cross.fill", "book.fill", "desktopcomputer", "gamecontroller.fill", "tray.fill", "creditcard.fill", "bag.fill", "leaf.fill", "building.fill"]
+    let icons = [
+        "banknote.fill", "dollarsign.circle.fill", "house.fill", "car.fill", "airplane",
+        "gift.fill", "heart.circle", "star.fill", "briefcase.fill", "graduationcap.fill",
+        "cart.fill", "cross.fill", "book.fill", "desktopcomputer", "gamecontroller.fill",
+        "tray.fill", "creditcard.fill", "bag.fill", "leaf.fill", "building.fill",
+        "globe", "camera.fill", "pawprint.fill", "music.note", "tv.fill",
+        "fork.knife", "umbrella.fill", "snowflake", "flag.fill", "bell.fill",
+        "bicycle", "bed.double.fill", "tshirt.fill", "tag.fill", "sunglasses",
+        "phone.fill", "wrench.fill", "hammer.fill", "paintbrush.fill", "bandage.fill",
+        "key.fill", "crown.fill", "theatermasks.fill", "ticket.fill", "film.fill",
+        "facemask.fill", "stethoscope", "flashlight.off.fill", "lightbulb.fill", "cloud.fill"
+    ]
 
     var body: some View {
         VStack(spacing: 0) {
-            // Title bar - Slightly reduced height to fit better
             Rectangle()
                 .fill(Color.blue)
                 .frame(height: 50)
@@ -32,10 +43,8 @@ struct CustomAddJarView: View {
                         .foregroundColor(.white)
                 )
 
-            // Form content in a compact layout with reduced spacing
             VStack(spacing: 10) {
-                // Name field
-                VStack(alignment: .center, spacing: 2) {
+                VStack(spacing: 2) {
                     Text("Name")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
@@ -51,8 +60,7 @@ struct CustomAddJarView: View {
                 }
                 .padding(.top, 10)
 
-                // Target Amount field
-                VStack(alignment: .center, spacing: 2) {
+                VStack(spacing: 2) {
                     Text("Target Amount")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
@@ -70,15 +78,16 @@ struct CustomAddJarView: View {
                         }
                 }
 
-                // Color selection
-                VStack(alignment: .center, spacing: 2) {
+                Toggle("Show in Small Widget", isOn: $showInWidget)
+                    .padding(.top, 5)
+
+                VStack(spacing: 2) {
                     Text("Color")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
 
                     HStack(spacing: 12) {
                         Spacer()
-
                         ForEach(colors, id: \.self) { color in
                             Circle()
                                 .fill(getColor(color))
@@ -92,14 +101,12 @@ struct CustomAddJarView: View {
                                     selectedColor = color
                                 }
                         }
-
                         Spacer()
                     }
                     .frame(maxWidth: .infinity)
                 }
 
-                // Icon selection - Reduced height to fit better
-                VStack(alignment: .center, spacing: 2) {
+                VStack(spacing: 2) {
                     Text("Icon")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
@@ -130,8 +137,6 @@ struct CustomAddJarView: View {
 
                 Spacer(minLength: 0)
 
-                // Action buttons - Using rectangular buttons instead of capsules to save space
-                // and extending to fill all horizontal space
                 HStack(spacing: 10) {
                     Button(action: {
                         isPresented = false
@@ -141,7 +146,7 @@ struct CustomAddJarView: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 12)
-                            .background(RoundedRectangle(cornerRadius: 10).fill(Color.red))
+                            .background(Capsule().fill(Color.red))
                     }
                     .buttonStyle(PlainButtonStyle())
 
@@ -153,7 +158,7 @@ struct CustomAddJarView: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 12)
-                            .background(RoundedRectangle(cornerRadius: 10).fill(Color.blue))
+                            .background(Capsule().fill(Color.blue))
                     }
                     .buttonStyle(PlainButtonStyle())
                     .disabled(name.isEmpty || targetAmount.isEmpty)
@@ -188,14 +193,14 @@ struct CustomAddJarView: View {
 
         let newJar = SavingsJar(
             name: name,
-            targetAmount: target,
             currentAmount: 0,
+            targetAmount: target,
             color: selectedColor,
-            icon: selectedIcon
+            icon: selectedIcon,
+            showInWidget: showInWidget
         )
 
-        viewModel.savingsJars.append(newJar)
-        viewModel.saveDataToUserDefaults()
+        viewModel.addSavingsJar(newJar)
         isPresented = false
     }
 }

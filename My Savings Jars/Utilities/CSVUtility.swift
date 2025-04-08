@@ -6,135 +6,110 @@
 //
 
 import Foundation
-//import Savings_Jar
 
 class CSVUtility {
-    // Safely escape string values for CSV
-    static func escapeCSVValue(_ value: String) -> String {
-        // Handle special characters in CSV
-        let escaped = value.replacingOccurrences(of: "\"", with: "\"\"")
-        return "\"\(escaped)\""
+    static func createCSV(from savingsJar: SavingsJar) -> String {
+        var csvString = "Date,Amount,Note,Type\n"
+        
+        for transaction in savingsJar.transactions {
+            let dateString = formatDate(transaction.date)
+            let amountString = formatAmount(abs(transaction.amount))
+            let noteString = transaction.note
+            let typeString = transaction.amount >= 0 ? "Deposit" : "Withdrawal"
+            
+            let rowString = "\(dateString),\(amountString),\(noteString),\(typeString)\n"
+            csvString.append(rowString)
+        }
+        
+        return csvString
     }
-    
-    // Convert a savings jar to a CSV row
-    static func jarToCSVRow(_ jar: SavingsJar) -> String {
-        // Convert transactions to a compact string representation
-        let transactionsString = jar.transactions.map { transaction in
-            // Use transaction.amount > 0 to determine if it's a deposit
-            "\(transaction.amount > 0 ? "deposit" : "withdrawal"):\(abs(transaction.amount)):\(transaction.date.ISO8601Format())"
-        }.joined(separator: ";")
+
+    static func createSavingsJar(from csvString: String, existingJar: SavingsJar? = nil) -> SavingsJar? {
+        let lines = csvString.components(separatedBy: .newlines)
         
-        let dateFormatter = ISO8601DateFormatter()
+        guard let headerLine = lines.first else {
+            print("Invalid CSV format: missing header")
+            return nil
+        }
         
-        return [
-            jar.id.uuidString,
-            escapeCSVValue(jar.name),
-            String(format: "%.2f", jar.targetAmount),
-            String(format: "%.2f", jar.currentAmount),
-            jar.color,
-            jar.icon,
-            dateFormatter.string(from: jar.creationDate),
-            escapeCSVValue(transactionsString)
-        ].joined(separator: ",")
-    }
-    
-    // Parse a CSV row back into a SavingsJar
-    static func csvRowToJar(_ row: String) -> SavingsJar? {
-        // Careful CSV parsing that handles quoted fields
-        var fields: [String] = []
-        var currentField = ""
-        var isInQuotes = false
-        var escapeNextChar = false
-        
-        for char in row {
-            if escapeNextChar {
-                currentField.append(char)
-                escapeNextChar = false
+        let headers = headerLine.components(separatedBy: ",")
+        guard headers == ["Date", "Amount", "Note", "Type"] else {
+            print("Invalid CSV format: incorrect headers")
+            return nil
+        }
+
+        var transactions: [SavingsTransaction] = []
+
+        for (index, line) in lines.enumerated() {
+            if index == 0 || line.isEmpty { continue }
+
+            let values = line.components(separatedBy: ",")
+
+            guard values.count == 4 else {
+                print("Invalid CSV format at line \(index + 1): incorrect number of values")
                 continue
             }
-            
-            switch char {
-            case "\"":
-                // Fix the trailing closure warning by using parentheses
-                if isInQuotes && (row.firstIndex(of: char).map { row.distance(from: row.startIndex, to: $0) } == fields.count) {
-                    // Escaped quote within quoted field
-                    currentField.append(char)
-                } else {
-                    isInQuotes.toggle()
-                }
-            case ",":
-                if !isInQuotes {
-                    fields.append(currentField)
-                    currentField = ""
-                } else {
-                    currentField.append(char)
-                }
-            case "\\":
-                escapeNextChar = true
-            default:
-                currentField.append(char)
+
+            let dateString = values[0]
+            let amountString = values[1]
+            let noteString = values[2]
+            let typeString = values[3]
+
+            guard let date = parseDate(dateString),
+                  let amount = parseAmount(amountString) else {
+                print("Invalid date or amount format at line \(index + 1)")
+                continue
             }
+
+            let signedAmount = (typeString == "Deposit") ? abs(amount) : -abs(amount)
+
+            let transaction = SavingsTransaction(
+                id: UUID(), // <- Add this line
+                date: date,
+                amount: signedAmount,
+                note: noteString
+            )
+
+            transactions.append(transaction)
         }
-        fields.append(currentField)
-        
-        // Validate we have enough fields
-        guard fields.count >= 7 else { return nil }
-        
-        let dateFormatter = ISO8601DateFormatter()
-        
-        // Remove quotes from string fields
-        func unquote(_ str: String) -> String {
-            var result = str
-            if result.hasPrefix("\"") && result.hasSuffix("\"") {
-                result.removeFirst()
-                result.removeLast()
-            }
-            return result.replacingOccurrences(of: "\"\"", with: "\"")
-        }
-        
-        guard
-            let id = UUID(uuidString: fields[0]),
-            let targetAmount = Double(fields[2]),
-            let currentAmount = Double(fields[3]),
-            let creationDate = dateFormatter.date(from: fields[6])
-        else { return nil }
-        
-        // Parse transactions
-        let transactions: [Transaction] = fields.count > 7
-            ? parseTransactions(unquote(fields[7]))
-            : []
-        
-        return SavingsJar(
-            id: id,
-            name: unquote(fields[1]),
-            targetAmount: targetAmount,
-            currentAmount: currentAmount,
-            color: fields[4],
-            icon: fields[5],
-            creationDate: creationDate,
-            transactions: transactions
-        )
-    }
-    
-    // Parse transaction string back into Transaction objects
-    static func parseTransactions(_ transactionString: String) -> [Transaction] {
-        guard !transactionString.isEmpty else { return [] }
-        
-        return transactionString.split(separator: ";").compactMap { transactionData in
-            let parts = transactionData.split(separator: ":")
-            guard
-                parts.count == 3,
-                let amount = Double(parts[1]),
-                let date = ISO8601DateFormatter().date(from: String(parts[2]))
-            else { return nil }
-            
-            // Use the deposit/withdrawal indicator to set the sign
-            let finalAmount = parts[0] == "deposit" ? amount : -amount
-            
-            return Transaction(
-                amount: finalAmount,
-                date: date
+
+        if let jar = existingJar {
+            var updatedJar = jar
+            updatedJar.transactions = transactions
+            updatedJar.currentAmount = transactions.reduce(0) { $0 + $1.amount }
+            return updatedJar
+        } else {
+            return SavingsJar(
+                name: "Imported Jar",
+                currentAmount: transactions.reduce(0) { $0 + $1.amount },
+                targetAmount: 0,
+                color: "blue",
+                icon: "banknote",
+                transactions: transactions,
+                creationDate: Date()
             )
         }
+    }
+
+    // MARK: - Helpers
+
+    private static func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: date)
+    }
+
+    private static func parseDate(_ string: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: string)
+    }
+
+    private static func formatAmount(_ amount: Double) -> String {
+        return String(format: "%.2f", amount)
+    }
+
+    private static func parseAmount(_ string: String) -> Double? {
+        return Double(string)
     }
 }

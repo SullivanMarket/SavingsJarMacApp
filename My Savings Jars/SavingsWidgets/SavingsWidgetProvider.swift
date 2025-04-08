@@ -5,61 +5,55 @@
 //  Created by Sean Sullivan on 3/23/25.
 //
 
+// SavingsWidgetProvider.swift
+// Updated with eligibleJars fix
+
 import WidgetKit
 import SwiftUI
 import Foundation
 
 struct SavingsWidgetProvider: TimelineProvider {
-    
+
     func placeholder(in context: Context) -> SavingsWidgetEntry {
-        return SavingsWidgetEntry(date: Date(), widgetData: WidgetData.sample)
+        print("📦 Placeholder called - showing sample")
+        return SavingsWidgetEntry(date: Date(), widgetData: WidgetData.sample, eligibleJars: WidgetData.sample.allJars)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SavingsWidgetEntry) -> Void) {
-        let widgetData = SavingsDataProvider.shared.getWidgetData()
-        let entry = SavingsWidgetEntry(date: Date(), widgetData: widgetData)
+        let widgetData = AppGroupFileManager.shared.getWidgetData()
+        let eligibleJars = widgetData.allJars.filter { $0.showInWidget }
+
+        let selectedJars: [SavingsJar]
+        if context.family == .systemMedium {
+            selectedJars = Array(eligibleJars.prefix(2))
+        } else if context.family == .systemLarge {
+            selectedJars = Array(eligibleJars.prefix(4))
+        } else {
+            selectedJars = Array(eligibleJars.prefix(1))
+        }
+
+        let entry = SavingsWidgetEntry(date: Date(), widgetData: WidgetData(allJars: selectedJars, selectedJar: selectedJars.first), eligibleJars: selectedJars)
+        print("📸 Snapshot (\(context.family)) with \(selectedJars.count) jars")
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<SavingsWidgetEntry>) -> Void) {
-        let widgetData = SavingsDataProvider.shared.getWidgetData()
-        let entry = SavingsWidgetEntry(date: Date(), widgetData: widgetData)
+        let widgetData = AppGroupFileManager.shared.getWidgetData()
+        let eligibleJars = widgetData.allJars.filter { $0.showInWidget }
 
-        print("📦 Widget Timeline Loaded. Total Jars: \(widgetData.allJars.count)")
+        var entries: [SavingsWidgetEntry] = []
+        let currentDate = Date()
 
-        let timeline = Timeline(entries: [entry], policy: .atEnd)
+        for i in 0..<eligibleJars.count {
+            let jar = eligibleJars[i]
+            let entryDate = Calendar.current.date(byAdding: .minute, value: i * 15, to: currentDate)!
+            let entryData = WidgetData(allJars: widgetData.allJars, selectedJar: jar)
+            let entry = SavingsWidgetEntry(date: entryDate, widgetData: entryData, eligibleJars: eligibleJars)
+            entries.append(entry)
+        }
+
+        print("📦 Timeline generated with \(entries.count) entries.")
+        let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
-}
-
-// MARK: - Widget Configuration
-struct SavingsJarWidget: Widget {
-    let kind: String = "SavingsJarWidget"
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: SavingsWidgetProvider()) { entry in
-            SavingsWidgetView(entry: entry) // ✅ FIXED: Pass entry instead of separate variables
-        }
-        .configurationDisplayName("Savings Jars")
-        .description("View your savings progress directly on your home screen.")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
-    }
-}
-
-// MARK: - Widget Preview
-struct SavingsJarWidget_Previews: PreviewProvider {
-    static var previews: some View {
-        SavingsWidgetView(
-            entry: SavingsWidgetEntry(date: Date(), widgetData: WidgetData.sample)
-        )
-        .previewContext(WidgetPreviewContext(family: .systemMedium))
-    }
-}
-
-// MARK: - Force Widget Update
-func forceWidgetUpdate() {
-    #if canImport(WidgetKit)
-    WidgetCenter.shared.reloadAllTimelines()
-    print("🔄 Widget timelines reloaded.")
-    #endif
 }

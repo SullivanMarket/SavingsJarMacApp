@@ -8,58 +8,111 @@
 import WidgetKit
 import SwiftUI
 
+// MARK: - Entry
+struct SimpleEntry: TimelineEntry {
+    let date: Date
+    let jars: [WidgetJarData]
+
+    var selectedJar: WidgetJarData? {
+        return jars.first
+    }
+}
+
+// MARK: - Provider
 struct Provider: TimelineProvider {
+    typealias Entry = SimpleEntry
+
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀")
+        let sampleJars = [
+            WidgetJarData(
+                id: UUID(),
+                name: "Vacation",
+                currentAmount: 750,
+                targetAmount: 2000,
+                color: "blue",
+                icon: "airplane",
+                progressPercentage: 0.375
+            )
+        ]
+        return SimpleEntry(date: Date(), jars: sampleJars)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), emoji: "😀")
-        completion(entry)
+        let widgetData = AppGroupFileManager.shared.getWidgetData()
+        let jars = widgetData.allJars.map {
+            WidgetJarData(
+                id: $0.id,
+                name: $0.name,
+                currentAmount: $0.currentAmount,
+                targetAmount: $0.targetAmount,
+                color: $0.color,
+                icon: $0.icon,
+                progressPercentage: $0.targetAmount > 0 ? $0.currentAmount / $0.targetAmount : 0.0
+            )
+        }
+
+        completion(SimpleEntry(date: Date(), jars: jars))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "😀")
-            entries.append(entry)
+        let widgetData = AppGroupFileManager.shared.getWidgetData()
+        let jars = widgetData.allJars.map {
+            WidgetJarData(
+                id: $0.id,
+                name: $0.name,
+                currentAmount: $0.currentAmount,
+                targetAmount: $0.targetAmount,
+                color: $0.color,
+                icon: $0.icon,
+                progressPercentage: $0.targetAmount > 0 ? $0.currentAmount / $0.targetAmount : 0.0
+            )
         }
 
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
+        let entry = SimpleEntry(date: Date(), jars: jars.isEmpty ? createSampleJars() : jars)
+        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
+        completion(Timeline(entries: [entry], policy: .after(nextUpdate)))
     }
 
-//    func relevances() async -> WidgetRelevances<Void> {
-//        // Generate a list containing the contexts this widget is relevant in.
-//    }
+    private func createSampleJars() -> [WidgetJarData] {
+        return [
+            WidgetJarData(
+                id: UUID(),
+                name: "Sample Jar",
+                currentAmount: 500,
+                targetAmount: 1000,
+                color: "blue",
+                icon: "dollarsign.circle",
+                progressPercentage: 0.5
+            )
+        ]
+    }
 }
 
-struct SimpleEntry: TimelineEntry {
-    let date: Date
-    let emoji: String
-}
-
-struct MySavingsWidgetsEntryView : View {
+// MARK: - View
+struct MySavingsWidgetsEntryView: View {
     var entry: Provider.Entry
+    @Environment(\.widgetFamily) var family
 
     var body: some View {
-        VStack {
-            HStack {
-                Text("Time:")
-                Text(entry.date, style: .time)
+        switch family {
+        case .systemSmall:
+            if let jar = entry.selectedJar {
+                SmallSavingsWidgetView(jar: jar)
+            } else {
+                Text("No Jar")
             }
-
-            Text("Emoji:")
-            Text(entry.emoji)
+        case .systemMedium:
+            MediumSavingsWidgetView(jars: entry.jars)
+        case .systemLarge:
+            LargeSavingsWidgetView(jars: entry.jars)
+        default:
+            Text("Unsupported")
         }
     }
 }
 
-struct MySavingsWidgets: Widget {
+// MARK: - Widget
+struct MySavingsWidget: Widget {
     let kind: String = "MySavingsWidgets"
 
     var body: some WidgetConfiguration {
@@ -73,7 +126,32 @@ struct MySavingsWidgets: Widget {
                     .background()
             }
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Savings Jar")
+        .description("View your savings progress.")
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
+}
+
+// MARK: - Main WidgetBundle
+@main
+struct MySavingsWidgets: WidgetBundle {
+    var body: some Widget {
+        MySavingsWidget()
+    }
+}
+
+// MARK: - Preview
+#Preview(as: .systemSmall) {
+    MySavingsWidget()
+} timeline: {
+    let jar = WidgetJarData(
+        id: UUID(),
+        name: "Vacation Fund",
+        currentAmount: 750,
+        targetAmount: 2000,
+        color: "blue",
+        icon: "airplane",
+        progressPercentage: 0.375
+    )
+    SimpleEntry(date: Date(), jars: [jar])
 }

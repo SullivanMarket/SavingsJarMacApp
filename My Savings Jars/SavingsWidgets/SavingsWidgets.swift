@@ -8,7 +8,6 @@
 import WidgetKit
 import SwiftUI
 
-@main
 struct SavingsWidgetsBundle: WidgetBundle {
     var body: some Widget {
         SavingsWidget()
@@ -29,21 +28,63 @@ struct SavingsWidget: Widget {
 struct SavingsWidgetView: View {
     @Environment(\.widgetFamily) var family
     let entry: SavingsWidgetEntry
-    
+
     var body: some View {
         switch family {
         case .systemSmall:
-            SmallSavingsWidgetView(entry: entry)
-                .containerBackground(.background, for: .widget)
+            if let selected = entry.widgetData.selectedJar {
+                let widgetJar = WidgetJarData(
+                    id: selected.id,
+                    name: selected.name,
+                    currentAmount: selected.currentAmount,
+                    targetAmount: selected.targetAmount,
+                    color: selected.color,
+                    icon: selected.icon,
+                    progressPercentage: selected.targetAmount > 0
+                        ? selected.currentAmount / selected.targetAmount
+                        : 0.0
+                )
+
+                SmallSavingsWidgetView(jar: widgetJar)
+                    .containerBackground(.background, for: .widget)
+            } else {
+                Text("No eligible jars")
+            }
+
         case .systemMedium:
-            MediumSavingsWidgetView(entry: entry)
-                .containerBackground(.background, for: .widget)
+            MediumSavingsWidgetView(jars: entry.widgetData.allJars.map {
+                WidgetJarData(
+                    id: $0.id,
+                    name: $0.name,
+                    currentAmount: $0.currentAmount,
+                    targetAmount: $0.targetAmount,
+                    color: $0.color,
+                    icon: $0.icon,
+                    progressPercentage: $0.targetAmount > 0
+                        ? $0.currentAmount / $0.targetAmount
+                        : 0.0
+                )
+            })
+            .containerBackground(.background, for: .widget)
+
         case .systemLarge:
-            LargeSavingsWidgetView(entry: entry)
-                .containerBackground(.background, for: .widget)
+            LargeSavingsWidgetView(jars: entry.widgetData.allJars.map {
+                WidgetJarData(
+                    id: $0.id,
+                    name: $0.name,
+                    currentAmount: $0.currentAmount,
+                    targetAmount: $0.targetAmount,
+                    color: $0.color,
+                    icon: $0.icon,
+                    progressPercentage: $0.targetAmount > 0
+                        ? $0.currentAmount / $0.targetAmount
+                        : 0.0
+                )
+            })
+            .containerBackground(.background, for: .widget)
+
         default:
-            SmallSavingsWidgetView(entry: entry)
-                .containerBackground(.background, for: .widget)
+            Text("Not Supported")
         }
     }
 }

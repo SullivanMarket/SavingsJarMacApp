@@ -4,6 +4,8 @@
 ### Added
 - Pollished the look-n-feel of the whole UI
 - Added more icons to choose from
+- Added Edit Jar functionality
+- Added View Transactios functionality
 
 ## [v1.2.0] - Widget Update
 ### Added

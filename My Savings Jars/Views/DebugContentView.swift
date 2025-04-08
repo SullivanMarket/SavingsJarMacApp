@@ -11,61 +11,54 @@ struct DebugContentView: View {
     @EnvironmentObject var viewModel: SavingsViewModel
 
     var body: some View {
-        VStack {
+        VStack(spacing: 16) {
             Text("Debug Console")
                 .font(.title)
-                .padding()
+                .padding(.top)
 
-            Text(viewModel.debugMessage)
-                .foregroundColor(.gray)
-                .padding()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .border(Color.gray, width: 1)
-                .padding()
-
-            Button(action: {
-                viewModel.debugMessage = "Debugging enabled at \(Date())"
-            }) {
-                Text("Log Debug Message")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(viewModel.savingsJars) { jar in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("\(jar.name)")
+                                .font(.headline)
+                            Text("ID: \(jar.id.uuidString)")
+                                .font(.caption)
+                            Text("Current: $\(jar.currentAmount, specifier: "%.2f"), Target: $\(jar.targetAmount, specifier: "%.2f")")
+                                .font(.caption2)
+                        }
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(8)
+                    }
+                }
             }
-            .padding()
 
-            Button(action: {
-                addTestJar()
-            }) {
-                Text("Add Test Savings Jar")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+            HStack(spacing: 16) {
+                Button("Add Test Jar") {
+                    let testJar = SavingsJar(
+                        name: "Test",
+                        currentAmount: 100,
+                        targetAmount: 500,
+                        color: "blue",
+                        icon: "star.fill"
+                    )
+                    viewModel.addSavingsJar(testJar)
+                }
+
+                Button("Clear All Jars") {
+                    viewModel.savingsJars.removeAll()
+                    viewModel.saveDataToUserDefaults()
+                }
             }
-            .padding()
+            .padding(.bottom)
         }
         .padding()
-    }
-
-    private func addTestJar() {
-        let testJar = SavingsJar(
-            name: "Test Jar",
-            targetAmount: 500,
-            currentAmount: 100,
-            color: "green",
-            icon: "banknote.fill"
-        )
-        viewModel.savingsJars.append(testJar)
-        viewModel.saveDataToUserDefaults()
     }
 }
 
 struct DebugContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = SavingsViewModel()
-        return DebugContentView().environmentObject(viewModel)
+        DebugContentView().environmentObject(SavingsViewModel())
     }
 }

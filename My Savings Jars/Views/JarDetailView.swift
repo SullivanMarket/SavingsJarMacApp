@@ -1,6 +1,6 @@
 //
 //  JarDetailView.swift
-//  Savings Jar
+//  My Savings Jars
 //
 //  Created by Sean Sullivan on 3/17/25.
 //
@@ -10,16 +10,16 @@ import SwiftUI
 struct JarDetailView: View {
     let jar: SavingsJar
     @ObservedObject var viewModel: SavingsViewModel
-    
+
     @State private var showingTransactionPopup = false
     @State private var showingEditJarPopup = false
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text(jar.name)
                 .font(.title)
                 .fontWeight(.bold)
-            
+
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Text("Current Amount:")
@@ -27,27 +27,38 @@ struct JarDetailView: View {
                     Text("$\(jar.currentAmount, specifier: "%.2f")")
                         .fontWeight(.bold)
                 }
-                
+
                 HStack {
                     Text("Target Amount:")
                         .fontWeight(.medium)
                     Text("$\(jar.targetAmount, specifier: "%.2f")")
                         .fontWeight(.bold)
                 }
-                
+
                 HStack {
                     Text("Progress:")
                         .fontWeight(.medium)
-                    Text("\(Int(jar.progressPercentage))%")
+                    Text("\(Int(jar.percentComplete * 100))%")
                         .fontWeight(.bold)
                 }
             }
             
-            ProgressView(value: jar.progressPercentage, total: 100)
-                .frame(height: 16)
-                .padding(.vertical)
-            
-            // 🏦 Action buttons
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(height: 16)
+                        .cornerRadius(8)
+
+                    Rectangle()
+                        .fill(Color.blue) // or use getColor(jar.color)
+                        .frame(width: geometry.size.width * CGFloat(jar.percentComplete), height: 16)
+                        .cornerRadius(8)
+                }
+            }
+            .frame(height: 16)
+            .padding(.vertical)
+
             HStack(spacing: 12) {
                 Button(action: {
                     showingTransactionPopup = true
@@ -55,17 +66,18 @@ struct JarDetailView: View {
                     Label("Deposit / Withdraw", systemImage: "arrow.up.arrow.down.circle.fill")
                 }
                 .buttonStyle(DefaultButtonStyle())
-                
+
                 Button(action: {
                     showingEditJarPopup = true
                 }) {
                     Label("Edit", systemImage: "pencil.circle")
                 }
                 .buttonStyle(BorderlessButtonStyle())
-                
+
                 Button(action: {
                     if let index = viewModel.savingsJars.firstIndex(where: { $0.id == jar.id }) {
-                        viewModel.deleteSavingsJar(at: IndexSet(integer: index))
+                        viewModel.savingsJars.remove(at: index)
+                        viewModel.saveDataToUserDefaults()
                     }
                 }) {
                     Label("Delete", systemImage: "trash.circle")
@@ -74,7 +86,7 @@ struct JarDetailView: View {
                 .foregroundColor(.red)
             }
             .padding(.top, 10)
-            
+
             Spacer()
         }
         .padding()
@@ -88,18 +100,17 @@ struct JarDetailView: View {
     }
 }
 
-// 📌 Preview
 struct JarDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let sampleJar = SavingsJar(
             id: UUID(),
             name: "Sample Jar",
-            targetAmount: 2000,
             currentAmount: 750,
+            targetAmount: 2000,
             color: "blue",
             icon: "dollarsign.circle",
-            creationDate: Date(),
-            transactions: []
+            transactions: [],
+            creationDate: Date()
         )
         let viewModel = SavingsViewModel()
         return JarDetailView(jar: sampleJar, viewModel: viewModel)

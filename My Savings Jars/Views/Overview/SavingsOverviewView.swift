@@ -79,16 +79,18 @@ struct SavingsOverviewView_Previews: PreviewProvider {
         return SavingsOverviewView(
             savingsJars: [
                 SavingsJar(
+                    id: UUID(),
                     name: "Vacation",
-                    targetAmount: 2000,
                     currentAmount: 750,
+                    targetAmount: 2000,
                     color: "blue",
                     icon: "airplane"
                 ),
                 SavingsJar(
+                    id: UUID(),
                     name: "New Phone",
-                    targetAmount: 1000,
                     currentAmount: 350,
+                    targetAmount: 1000,
                     color: "purple",
                     icon: "iphone"
                 )

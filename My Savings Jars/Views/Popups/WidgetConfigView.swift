@@ -10,7 +10,7 @@ import SwiftUI
 struct WidgetConfigView: View {
     @ObservedObject var viewModel: SavingsViewModel
     @Binding var isPresented: Bool
-    
+
     private func getColor(_ colorString: String) -> Color {
         switch colorString {
         case "red": return .red
@@ -22,16 +22,16 @@ struct WidgetConfigView: View {
         default: return .blue
         }
     }
-    
+
     var body: some View {
         VStack(spacing: 20) {
             Text("Widget Configuration")
                 .font(.title2)
                 .fontWeight(.bold)
-            
+
             Text("Select Jar for Widget")
                 .font(.headline)
-            
+
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 15) {
                     ForEach(viewModel.savingsJars) { jar in
@@ -40,7 +40,7 @@ struct WidgetConfigView: View {
                 }
                 .padding()
             }
-            
+
             Button(action: {
                 isPresented = false
             }) {
@@ -53,13 +53,19 @@ struct WidgetConfigView: View {
             }
             .padding()
         }
+        .frame(minWidth: 400, minHeight: 500)
         .background(Color(.windowBackgroundColor))
         .cornerRadius(15)
     }
-    
-    private func jarSelectionButton(_ jar: SavingsJar) -> some View {
-        Button(action: {
-            viewModel.selectedWidgetJarId = jar.id
+
+    // ✅ No longer private, fixed compiler issue via local isSelected var
+    func jarSelectionButton(_ jar: SavingsJar) -> some View {
+        // Capture into a local variable to avoid SwiftUI confusion
+        let vm = viewModel
+        let isSelected = vm.isWidgetJarSelected(jar.id)
+
+        return Button(action: {
+            vm.selectWidgetJar(jar.id)
             isPresented = false
         }) {
             VStack {
@@ -68,16 +74,16 @@ struct WidgetConfigView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 50)
                     .foregroundColor(getColor(jar.color))
-                
+
                 Text(jar.name)
                     .font(.headline)
                     .foregroundColor(.primary)
-                
+
                 Text("$\(jar.currentAmount, specifier: "%.2f") / $\(jar.targetAmount, specifier: "%.2f")")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                
-                if viewModel.selectedWidgetJarId == jar.id {
+
+                if isSelected {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundColor(.green)
                 }
@@ -88,9 +94,7 @@ struct WidgetConfigView: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(
-                        viewModel.selectedWidgetJarId == jar.id
-                            ? getColor(jar.color)
-                            : Color.clear,
+                        isSelected ? getColor(jar.color) : Color.clear,
                         lineWidth: 2
                     )
             )

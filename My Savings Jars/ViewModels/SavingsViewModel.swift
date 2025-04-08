@@ -1,95 +1,129 @@
 //
 //  SavingsViewModel.swift
-//  Savings Jar
+//  My Savings Jars
 //
-//  Created by Sean Sullivan on 3/23/25.
+//  Created by Sean Sullivan on 4/1/25.
 //
 
-// Location: My Savings Jars/ViewModels/SavingsViewModel.swift
 import Foundation
 import SwiftUI
 import Combine
 
 class SavingsViewModel: ObservableObject {
     @Published var savingsJars: [SavingsJar] = []
-    @Published var selectedJarId: UUID?
+    @Published var selectedJarForEditing: SavingsJar?
     @Published var selectedJarForTransaction: SavingsJar?
     @Published var showingTransactionPopup: Bool = false
-    //@Published var selectedWidgetJarId: UUID? = nil
     
-    @Published var selectedWidgetJarId: UUID? = nil
-    @Published var selectedJarForEditing: SavingsJar?
-    @Published var showingEditJarPopup: Bool = false
-    @Published var debugMessage: String = ""
-    
-    // Method to add a transaction to a specific jar
-    func addSavingsTransaction(to jar: SavingsJar, transaction: Transaction) {
-        guard let index = savingsJars.firstIndex(where: { $0.id == jar.id }) else {
-            print("❌ Jar not found for transaction")
-            return
-        }
-        
-        savingsJars[index].currentAmount += transaction.amount
-        savingsJars[index].transactions.append(transaction)
-        saveDataToUserDefaults()
+    // Add inside class SavingsViewModel
+    @Published var editingJar: SavingsJar? = nil
+    @Published var isEditingJar: Bool = false
+    @Published var showingAddJarPopup: Bool = false
+    @Published var triggerImport: Bool = false
+    @Published var triggerExport: Bool = false
+
+    private let jarsFile = "savingsJars.json"
+
+    init() {
+        loadJars()
     }
-    
-    // Method to update a savings jar
+
+    func addSavingsJar(_ jar: SavingsJar) {
+        savingsJars.append(jar)
+        saveJars()
+    }
+
     func updateSavingsJar(updatedJar: SavingsJar) {
         if let index = savingsJars.firstIndex(where: { $0.id == updatedJar.id }) {
             savingsJars[index] = updatedJar
-            saveDataToUserDefaults()
+            saveJars()
+        }
+    }
+
+    func deleteSavingsJar(at offsets: IndexSet) {
+        savingsJars.remove(atOffsets: offsets)
+        saveJars()
+    }
+
+    func addSavingsTransaction(jar: SavingsJar, amount: Double, note: String, isDeposit: Bool) {
+        var updatedJar = jar
+        let signedAmount = isDeposit ? amount : -amount
+
+        let transaction = SavingsTransaction(id: UUID(), date: Date(), amount: signedAmount, note: note)
+        updatedJar.transactions.insert(transaction, at: 0)
+        updatedJar.currentAmount += signedAmount
+
+        updateSavingsJar(updatedJar: updatedJar)
+    }
+
+    // MARK: - Persistence
+
+    func saveJars() {
+        if let data = try? JSONEncoder().encode(savingsJars) {
+            AppGroupFileManager.shared.save(data: data, to: jarsFile)
+            UserDefaults.standard.set(data, forKey: "SavingsJars")
+            AppGroupFileManager.shared.forceWidgetUpdate()
+            print("✅ Saved \(savingsJars.count) jars to App Group + UserDefaults")
+        }
+    }
+
+    func loadJars() {
+        if let data = AppGroupFileManager.shared.load(from: jarsFile),
+           let decoded = try? JSONDecoder().decode([SavingsJar].self, from: data) {
+            self.savingsJars = decoded
+            print("📥 Loaded \(decoded.count) jars from App Group")
+        } else if let data = UserDefaults.standard.data(forKey: "SavingsJars"),
+                  let jars = try? JSONDecoder().decode([SavingsJar].self, from: data) {
+            self.savingsJars = jars
+            print("📥 Fallback: Loaded jars from UserDefaults")
         } else {
-            print("❌ Jar not found for update")
+            print("⚠️ Failed to load jars from all sources")
         }
     }
-    
-    // Method to delete a savings jar
-    func deleteSavingsJar(at indexSet: IndexSet) {
-        savingsJars.remove(atOffsets: indexSet)
-        saveDataToUserDefaults()
+
+    // MARK: - Export/Import
+
+    func exportJars() -> Data? {
+        return try? JSONEncoder().encode(savingsJars)
     }
-    
-    // Save data to UserDefaults
-    func saveDataToUserDefaults() {
-        do {
-            let encoder = JSONEncoder()
-            let jarData = try encoder.encode(savingsJars)
-            UserDefaults.standard.set(jarData, forKey: "SavingsJars_Data")
-        } catch {
-            print("❌ Failed to encode jars: \(error)")
-        }
-    }
-    
-    // Load data from UserDefaults
-    func loadDataFromUserDefaults() {
-        guard let data = UserDefaults.standard.data(forKey: "SavingsJars_Data") else {
-            print("⚠️ No jar data found")
+
+    func importJars(from data: Data) {
+        guard let imported = try? JSONDecoder().decode([SavingsJar].self, from: data) else {
+            print("❌ Failed to import jars.")
             return
         }
-        
-        do {
-            let decoder = JSONDecoder()
-            savingsJars = try decoder.decode([SavingsJar].self, from: data)
-        } catch {
-            print("❌ Failed to decode jars: \(error)")
+
+        self.savingsJars = imported
+        saveJars()
+    }
+
+    // MARK: - Legacy Support
+
+    func saveDataToUserDefaults() {
+        if let data = try? JSONEncoder().encode(savingsJars) {
+            UserDefaults.standard.set(data, forKey: "SavingsJars")
+            print("✅ Saved jars to UserDefaults")
         }
     }
-    
-    // Initialize with some default data if needed
-    init() {
-        loadDataFromUserDefaults()
-        
-        if savingsJars.isEmpty {
-            let sampleJar = SavingsJar(
-                name: "My First Jar",
-                targetAmount: 1000,
-                currentAmount: 0,
-                color: "blue",
-                icon: "dollarsign.circle"
-            )
-            savingsJars.append(sampleJar)
-            saveDataToUserDefaults()
+
+    func loadDataFromUserDefaults() {
+        if let data = UserDefaults.standard.data(forKey: "SavingsJars"),
+           let jars = try? JSONDecoder().decode([SavingsJar].self, from: data) {
+            self.savingsJars = jars
+            print("📥 Loaded jars from UserDefaults")
         }
+    }
+
+    // MARK: - Widget Selection
+
+    func isWidgetJarSelected(_ id: UUID) -> Bool {
+        return savingsJars.first(where: { $0.id == id })?.showInWidget ?? false
+    }
+
+    func selectWidgetJar(_ id: UUID) {
+        for i in savingsJars.indices {
+            savingsJars[i].showInWidget = (savingsJars[i].id == id)
+        }
+        saveJars()
     }
 }

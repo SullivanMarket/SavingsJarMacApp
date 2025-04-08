@@ -11,11 +11,10 @@ import Combine
 
 @main
 struct SavingsJarApp: App {
-    // Create the settings manager at the app level so it persists
     @StateObject private var settingsManager = SettingsManager()
     @StateObject private var viewModel = SavingsViewModel()
     @Environment(\.scenePhase) private var scenePhase
-    
+
     var body: some Scene {
         WindowGroup {
             MainDashboardView(viewModel: viewModel, settingsManager: settingsManager)
@@ -23,44 +22,60 @@ struct SavingsJarApp: App {
                 .environmentObject(settingsManager)
                 .environmentObject(viewModel)
                 .onAppear {
-                    // Apply appearance settings when app launches
                     settingsManager.applyAppearanceSettings()
-                    
-                    // Load and update widget data when app launches
                     viewModel.loadDataFromUserDefaults()
-                    
-                    // Log debug info
                     print("🔄 App launched with \(viewModel.savingsJars.count) jars")
                 }
                 .onOpenURL { url in
-                    // Handle URL when app is opened from a widget
                     processWidgetLaunch(url: url)
                 }
+                .onReceive(NotificationCenter.default.publisher(for: Notification.Name("ShowAddJarPopup"))) { _ in
+                    viewModel.editingJar = nil
+                    viewModel.isEditingJar = false
+                    viewModel.showingAddJarPopup = true
+                }
+                .onReceive(NotificationCenter.default.publisher(for: Notification.Name("ShowImportPopup"))) { _ in
+                    viewModel.triggerImport = true
+                }
+                .onReceive(NotificationCenter.default.publisher(for: Notification.Name("ShowExportPopup"))) { _ in
+                    viewModel.triggerExport = true
+                }
         }
-        .windowStyle(.hiddenTitleBar) // Give the app a more modern look
-        .onChange(of: scenePhase) { oldPhase, newPhase in
-            print("🔄 Scene phase changed: \(oldPhase) -> \(newPhase)")
-            
+        .windowStyle(.hiddenTitleBar)
+        .onChange(of: scenePhase, initial: false) { oldPhase, newPhase in
+            print("🔄 Scene changed from \(oldPhase) → \(newPhase)")
+
             if newPhase == .background {
-                // Important: Save all data when app goes to background
                 print("💾 App entering background - saving data")
                 viewModel.saveDataToUserDefaults()
-            } else if newPhase == .active && oldPhase == .background {
-                // Reload data when becoming active from background
-                print("🔄 App becoming active from background - reloading data")
+            } else if newPhase == .active {
+                print("🔄 App becoming active - reloading data")
                 viewModel.loadDataFromUserDefaults()
             }
         }
-        
         #if os(macOS)
-        // Add macOS-specific settings
         .commands {
             CommandGroup(after: .appSettings) {
+                Button("Add Jar") {
+                    NotificationCenter.default.post(name: Notification.Name("ShowAddJarPopup"), object: nil)
+                }
+                .keyboardShortcut("n", modifiers: [.command])
+
+                Button("Import Jars") {
+                    NotificationCenter.default.post(name: Notification.Name("ShowImportPopup"), object: nil)
+                }
+
+                Button("Export Jars") {
+                    NotificationCenter.default.post(name: Notification.Name("ShowExportPopup"), object: nil)
+                }
+
+                Divider()
+
                 Button("Save Data") {
                     viewModel.saveDataToUserDefaults()
                 }
                 .keyboardShortcut("s", modifiers: [.command])
-                
+
                 Button("Debug Panel") {
                     NotificationCenter.default.post(name: Notification.Name("ToggleDebugPanel"), object: nil)
                 }
@@ -69,36 +84,30 @@ struct SavingsJarApp: App {
         }
         #endif
     }
-    
-    // Separate method to handle widget launch
+
     private func processWidgetLaunch(url: URL) {
         print("📱 App launched from widget with URL: \(url)")
-        
-        // Parse the URL to extract the jar ID if present
+
         if let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
            let action = components.host {
-            
+
             switch action {
             case "viewJar":
-                // Extract jar ID from URL query parameters
                 if let jarIdParam = components.queryItems?.first(where: { $0.name == "id" })?.value,
-                   let jarId = UUID(uuidString: jarIdParam) {
-                    // Set the selected jar
-                    viewModel.selectedJarId = jarId
+                   let jarId = UUID(uuidString: jarIdParam),
+                   let _ = viewModel.savingsJars.firstIndex(where: { $0.id == jarId }) {
                     print("🔍 Selected jar from widget: \(jarId)")
                 }
-                
+
             case "addTransaction":
-                // Handle transaction request
                 if let jarIdParam = components.queryItems?.first(where: { $0.name == "id" })?.value,
                    let jarId = UUID(uuidString: jarIdParam),
                    let jar = viewModel.savingsJars.first(where: { $0.id == jarId }) {
-                    // Show transaction UI for this jar
                     viewModel.selectedJarForTransaction = jar
                     viewModel.showingTransactionPopup = true
                     print("💰 Showing transaction UI for jar: \(jar.name)")
                 }
-                
+
             default:
                 print("⚠️ Unknown widget action: \(action)")
             }

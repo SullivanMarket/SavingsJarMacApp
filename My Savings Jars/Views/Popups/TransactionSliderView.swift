@@ -1,3 +1,4 @@
+
 //
 //  TransactionSliderView.swift
 //  Savings Jar
@@ -24,7 +25,6 @@ struct TransactionSliderView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Title Bar with bigger text
             Rectangle()
                 .fill(Color.blue)
                 .frame(height: 60)
@@ -35,9 +35,7 @@ struct TransactionSliderView: View {
                         .foregroundColor(.white)
                 )
             
-            // Content
             VStack(spacing: 24) {
-                // Transaction type selector
                 HStack(spacing: 0) {
                     Button(action: {
                         transactionType = .deposit
@@ -66,25 +64,20 @@ struct TransactionSliderView: View {
                 .cornerRadius(8)
                 .padding(.top, 15)
                 
-                // Jar Info
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(jar.name)
                             .font(.headline)
-                        
                         Text("Current Balance: $\(jar.currentAmount, specifier: "%.2f")")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
-                    
                     Spacer()
-                    
                     Image(systemName: jar.icon)
                         .font(.system(size: 24))
                         .foregroundColor(.blue)
                 }
                 
-                // Amount field
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Amount")
                         .font(.subheadline)
@@ -100,7 +93,6 @@ struct TransactionSliderView: View {
                         )
                 }
                 
-                // Note field
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Note (Optional)")
                         .font(.subheadline)
@@ -116,9 +108,8 @@ struct TransactionSliderView: View {
                         )
                 }
                 
-                Spacer(minLength: 20) // Add flexible space
+                Spacer(minLength: 20)
                 
-                // Action buttons
                 HStack(spacing: 16) {
                     Button(action: {
                         isPresented = false
@@ -154,7 +145,7 @@ struct TransactionSliderView: View {
         .background(Color(.windowBackgroundColor))
         .cornerRadius(12)
         .frame(width: 400, height: 550)
-        .clipped() // Ensures content stays within bounds
+        .clipped()
         .alert(isPresented: $showErrorAlert) {
             Alert(
                 title: Text("Insufficient Funds"),
@@ -163,7 +154,6 @@ struct TransactionSliderView: View {
             )
         }
         .onAppear {
-            // Set default amount if needed
             if amountString.isEmpty {
                 amountString = "0.00"
             }
@@ -172,32 +162,14 @@ struct TransactionSliderView: View {
     
     private func processTransaction() {
         guard let amount = Double(amountString.replacingOccurrences(of: ",", with: ".")) else { return }
-        
-        if transactionType == .deposit {
-            // Process deposit
-            let newTransaction = Transaction(
-                amount: amount,
-                date: Date(),
-                note: note
-            )
-            viewModel.addSavingsTransaction(to: jar, transaction: newTransaction)
-        } else {
-            // Process withdrawal - only if there's enough balance
-            if amount <= jar.currentAmount {
-                let newTransaction = Transaction(
-                    amount: -amount, // Negative amount for withdrawal
-                    date: Date(),
-                    note: note
-                )
-                viewModel.addSavingsTransaction(to: jar, transaction: newTransaction)
-            } else {
-                // Show error alert that withdrawal exceeds balance
-                showErrorAlert = true
-                return
-            }
+
+        if transactionType == .withdraw && amount > jar.currentAmount {
+            showErrorAlert = true
+            return
         }
-        
-        // Close the sheet
+
+        let isDeposit = transactionType == .deposit
+        viewModel.addSavingsTransaction(jar: jar, amount: amount, note: note, isDeposit: isDeposit)
         isPresented = false
     }
 }
