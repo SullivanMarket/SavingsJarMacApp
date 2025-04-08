@@ -2,10 +2,21 @@
 
 ## [v1.3.0] - Widget Update
 ### Added
-- Pollished the look-n-feel of the whole UI
-- Added more icons to choose from
-- Added Edit Jar functionality
-- Added View Transactios functionality
+- Edit Jar functionality
+- View Transactions functionality
+- More icons to choose from when creating or editing a jar
+- "Show in Widget" toggle for jars (from Add/Edit views)
+- Widget Configuration view to select eligible jars
+- Random selection of eligible jars for widget display
+- Expand/Collapse functionality for sidebar navigation
+- Modularized Main Dashboard components (UI architecture cleanup)
+
+### Improved
+- Polished the look-n-feel of the entire UI
+- Made only the transaction list scrollable in detail view (not the full view)
+- Improved synchronization of app data with widgets via App Group
+- Fixed widget visibility and preview behavior using correct `@main` and `WidgetBundle`
+- Updated widget rendering logic to handle edge cases and missing jars
 
 ## [v1.2.0] - Widget Update
 ### Added
