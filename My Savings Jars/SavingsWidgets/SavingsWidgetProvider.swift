@@ -5,9 +5,6 @@
 //  Created by Sean Sullivan on 3/23/25.
 //
 
-// SavingsWidgetProvider.swift
-// Updated with eligibleJars fix
-
 import WidgetKit
 import SwiftUI
 import Foundation

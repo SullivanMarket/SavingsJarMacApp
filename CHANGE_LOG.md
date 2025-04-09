@@ -1,4 +1,11 @@
-# Savings Jar App Changelog
+# My Savings Jar App Changelog
+
+## [v1.3.1] - Widget Stability & Visual Feedback
+### Added
+- Graceful widget fallback message ("Loading...") while app group container is initializing after macOS login or reboot
+
+### Improved
+- Reduced blank widget states after system restart by adding retry logic to fetch data from App Group container
 
 ## [v1.3.0] - Widget Update
 ### Added

@@ -89,7 +89,7 @@ struct Provider: TimelineProvider {
 }
 
 // MARK: - View
-struct MySavingsWidgetsEntryView: View {
+struct MySavingsWidgetsEntryView : View {
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
 
@@ -98,13 +98,35 @@ struct MySavingsWidgetsEntryView: View {
         case .systemSmall:
             if let jar = entry.selectedJar {
                 SmallSavingsWidgetView(jar: jar)
+            } else if entry.jars.isEmpty {
+                Text("Loading savings jars...")
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                    .padding()
             } else {
                 Text("No Jar")
             }
+
         case .systemMedium:
-            MediumSavingsWidgetView(jars: entry.jars)
+            if entry.jars.isEmpty {
+                Text("Loading savings jars...")
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                    .padding()
+            } else {
+                MediumSavingsWidgetView(jars: entry.jars)
+            }
+
         case .systemLarge:
-            LargeSavingsWidgetView(jars: entry.jars)
+            if entry.jars.isEmpty {
+                Text("Loading savings jars...")
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                    .padding()
+            } else {
+                LargeSavingsWidgetView(jars: entry.jars)
+            }
+
         default:
             Text("Unsupported")
         }
