@@ -10,6 +10,7 @@ import Foundation
 
 struct SavingsWidgetEntry: TimelineEntry {
     let date: Date
-    let widgetData: WidgetData
-    let eligibleJars: [SavingsJar]
+    let jar: WidgetJarData?     // For small widget
+    let jars: [WidgetJarData]   // For medium and large widgets
+    let timestamp: Date // Already used by TimelineEntry
 }

@@ -9,9 +9,17 @@ import SwiftUI
 
 struct LargeSavingsWidgetView: View {
     let jars: [WidgetJarData]
+    let timestamp: Date
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
+            Spacer(minLength: 8) // 🔼 Top buffer
+
+            Text("My Savings Jars")
+                .font(.title3.italic())
+                .frame(maxWidth: .infinity)
+                .multilineTextAlignment(.center)
+
             if jars.isEmpty {
                 Text("No jars selected for widget")
                     .foregroundColor(.secondary)
@@ -45,6 +53,13 @@ struct LargeSavingsWidgetView: View {
             }
 
             Spacer()
+
+            Text("Updated: \(timestamp.formatted(date: .omitted, time: .shortened))")
+                .font(.caption2)
+                .foregroundColor(.gray)
+                .frame(maxWidth: .infinity, alignment: .center)
+
+            Spacer(minLength: 8) // 🔽 Bottom buffer
         }
         .padding()
     }

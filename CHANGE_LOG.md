@@ -1,14 +1,32 @@
 # My Savings Jar App Changelog
 
+## 🧾 Version 1.4.0
+
+### ✨ New Features
+- **Widget Overhaul**: Medium and large widgets now support **multiple jars**, dynamically selected through the new configuration panel.
+- **App Title & Timestamp**: Widgets now show a **centered app title** and a **last updated time** for added clarity.
+- **Improved Widget Picker**: Configure widgets with any number of jars using the redesigned selection interface.
+
+### 🔧 Improvements
+- Refined **widget layouts and spacing** for cleaner visuals.
+- Enhanced **small widget UI** to better align top/bottom padding.
+- Widget rendering now adapts more smoothly when resizing.
+
+### 🐛 Bug Fixes
+- Fixed issue where **selected jars were not persisting** in widget configurations.
+- Resolved rare crashes during export/import actions.
+- Removed outdated **"Show in Small Widget"** checkbox from Add/Edit Jar views.
+- Fixed file saving behavior for Export Jars and file loading for Import Jars.
+
 ## [v1.3.1] - Widget Stability & Visual Feedback
-### Added
+### ✨ New Features
 - Graceful widget fallback message ("Loading...") while app group container is initializing after macOS login or reboot
 
-### Improved
+### 🔧 Improvements
 - Reduced blank widget states after system restart by adding retry logic to fetch data from App Group container
 
-## [v1.3.0] - Widget Update
-### Added
+## 🧾 [v1.3.0] - Widget Update
+### ✨ New Features
 - Edit Jar functionality
 - View Transactions functionality
 - More icons to choose from when creating or editing a jar
@@ -18,15 +36,15 @@
 - Expand/Collapse functionality for sidebar navigation
 - Modularized Main Dashboard components (UI architecture cleanup)
 
-### Improved
+### 🔧 Improvements
 - Polished the look-n-feel of the entire UI
 - Made only the transaction list scrollable in detail view (not the full view)
 - Improved synchronization of app data with widgets via App Group
 - Fixed widget visibility and preview behavior using correct `@main` and `WidgetBundle`
 - Updated widget rendering logic to handle edge cases and missing jars
 
-## [v1.2.0] - Widget Update
-### Added
+## 🧾 [v1.2.0] - Widget Update
+### ✨ New Features
 - macOS desktop widgets for tracking savings goals
 - Progress widget showing individual jar status
 - Summary widget displaying overview of all jars
@@ -34,34 +52,30 @@
 - Real-time widget updates synchronized with the main app
 - Widget preferences in app settings
 
-### Changed
-- Enhanced data sharing between main app and widgets
-- Improved app architecture to support widget extension
-
-### Improvements
+### 🔧 Improvements
 - Optimized performance for widget updates
 - Added widget-specific color themes
 - Implemented efficient data refresh mechanism
+- Enhanced data sharing between main app and widgets
+- Improved app architecture to support widget extension
 
-## [v1.1.0] - Export and Import Update
-### Added
+## 🧾 [v1.1.0] - Export and Import Update
+### ✨ New Features
 - Export Savings Jars to CSV
 - Import Savings Jars from CSV
 - User-friendly file selection dialogs for CSV export and import
 - Comprehensive transaction history preservation during export/import
 - Error handling and user notifications for import/export processes
 
-### Changed
-- Enhanced CSV export/import method to include detailed jar information
-- Improved error handling for file import/export processes
-
-### Improvements
+### 🔧 Improvements
 - Added robust validation for imported CSV files
 - Implemented safeguards to prevent data loss during import
 - Created user-friendly alerts for import/export operations
+- Enhanced CSV export/import method to include detailed jar information
+- Improved error handling for file import/export processes
 
-## [v1.0.0] - Initial Release
-### Core Features
+## 🧾 [v1.0.0] - Initial Release
+### ✨ New Features
 - Create multiple savings jars
 - Set savings targets
 - Track current savings amount

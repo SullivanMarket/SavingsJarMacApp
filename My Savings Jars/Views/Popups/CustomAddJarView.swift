@@ -15,7 +15,6 @@ struct CustomAddJarView: View {
     @State private var targetAmount: String = ""
     @State private var selectedColor: String = "blue"
     @State private var selectedIcon: String = "banknote.fill"
-    @State private var showInWidget: Bool = false
 
     let colors = ["blue", "purple", "red", "green", "orange", "yellow"]
     let icons = [
@@ -77,9 +76,6 @@ struct CustomAddJarView: View {
                             targetAmount = String($0.prefix(10)).filter { "0123456789.".contains($0) }
                         }
                 }
-
-                Toggle("Show in Small Widget", isOn: $showInWidget)
-                    .padding(.top, 5)
 
                 VStack(spacing: 2) {
                     Text("Color")
@@ -196,8 +192,7 @@ struct CustomAddJarView: View {
             currentAmount: 0,
             targetAmount: target,
             color: selectedColor,
-            icon: selectedIcon,
-            showInWidget: showInWidget
+            icon: selectedIcon
         )
 
         viewModel.addSavingsJar(newJar)

@@ -41,8 +41,8 @@ class AppGroupFileManager {
 extension AppGroupFileManager {
     func getWidgetData() -> WidgetData {
         let allJars = SavingsDataProvider.shared.load()
-        let selected = allJars.filter { $0.showInWidget }.randomElement()
-        print("📦 getWidgetData() found \(allJars.count) jars, \(allJars.filter { $0.showInWidget }.count) marked for widget")
+        let selected = allJars.randomElement()
+        print("📦 getWidgetData() found \(allJars.count) jars")
         return WidgetData(allJars: allJars, selectedJar: selected)
     }
 }
