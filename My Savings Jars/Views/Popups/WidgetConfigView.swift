@@ -29,82 +29,42 @@ struct WidgetConfigView: View {
                 .font(.title2)
                 .fontWeight(.bold)
 
-            Text("Select Jar for Widget")
-                .font(.headline)
-
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 15) {
                     ForEach(viewModel.savingsJars) { jar in
-                        jarSelectionButton(jar)
+                        Button(action: {
+                            isPresented = false
+                        }) {
+                            VStack {
+                                Image(systemName: jar.icon)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(getColor(jar.color))
+
+                                Text(jar.name)
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+
+                                Text("$\(jar.currentAmount, specifier: "%.2f") / $\(jar.targetAmount, specifier: "%.2f")")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding()
+                            .background(getColor(jar.color).opacity(0.1))
+                            .cornerRadius(10)
+                        }
                     }
                 }
-                .padding()
+                .padding(.horizontal)
             }
 
-            Button(action: {
+            Button("Close") {
                 isPresented = false
-            }) {
-                Text("Close")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
             }
-            .padding()
+            .padding(.top, 10)
         }
+        .padding()
         .frame(minWidth: 400, minHeight: 500)
-        .background(Color(.windowBackgroundColor))
-        .cornerRadius(15)
-    }
-
-    // ✅ No longer private, fixed compiler issue via local isSelected var
-    func jarSelectionButton(_ jar: SavingsJar) -> some View {
-        // Capture into a local variable to avoid SwiftUI confusion
-        let vm = viewModel
-        let isSelected = vm.isWidgetJarSelected(jar.id)
-
-        return Button(action: {
-            vm.selectWidgetJar(jar.id)
-            isPresented = false
-        }) {
-            VStack {
-                Image(systemName: jar.icon)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(getColor(jar.color))
-
-                Text(jar.name)
-                    .font(.headline)
-                    .foregroundColor(.primary)
-
-                Text("$\(jar.currentAmount, specifier: "%.2f") / $\(jar.targetAmount, specifier: "%.2f")")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                if isSelected {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(.green)
-                }
-            }
-            .padding()
-            .background(getColor(jar.color).opacity(0.1))
-            .cornerRadius(10)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(
-                        isSelected ? getColor(jar.color) : Color.clear,
-                        lineWidth: 2
-                    )
-            )
-        }
-    }
-}
-
-struct WidgetConfigView_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewModel = SavingsViewModel()
-        return WidgetConfigView(viewModel: viewModel, isPresented: .constant(true))
     }
 }

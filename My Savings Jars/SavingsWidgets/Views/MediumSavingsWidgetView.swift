@@ -9,14 +9,20 @@ import SwiftUI
 
 struct MediumSavingsWidgetView: View {
     let jars: [WidgetJarData]
+    let timestamp: Date
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 8) { // ⬅️ reduced spacing
+            Text("My Savings Jars")
+                .font(.title3.italic())
+                .frame(maxWidth: .infinity)
+                .multilineTextAlignment(.center)
+
             if jars.isEmpty {
                 Text("No jars selected for widget")
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .padding()
+                    .padding(.vertical)
             } else {
                 ForEach(jars.prefix(2), id: \.id) { jar in
                     HStack(spacing: 10) {
@@ -32,7 +38,9 @@ struct MediumSavingsWidgetView: View {
                                 .lineLimit(1)
 
                             ProgressView(value: jar.progressPercentage)
-                                .progressViewStyle(LinearProgressViewStyle(tint: getColor(jar.color)))
+                                .progressViewStyle(
+                                    LinearProgressViewStyle(tint: getColor(jar.color))
+                                )
 
                             Text("\(Int(jar.progressPercentage * 100))% saved")
                                 .font(.caption2)
@@ -42,11 +50,16 @@ struct MediumSavingsWidgetView: View {
                         Spacer()
                     }
                 }
-            }
 
-            Spacer()
+                Text("Updated: \(timestamp.formatted(date: .omitted, time: .shortened))")
+                    .font(.caption2)
+                    .foregroundColor(.gray)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 4)
+            }
         }
-        .padding()
+        .padding(.vertical, 10)
+        .padding(.horizontal, 12)
     }
 
     private func getColor(_ color: String) -> Color {

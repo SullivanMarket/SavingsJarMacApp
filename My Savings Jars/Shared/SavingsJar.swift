@@ -23,7 +23,6 @@ struct SavingsJar: Identifiable, Codable, Hashable {
     var color: String
     var icon: String
     var transactions: [SavingsTransaction] = []
-    var showInWidget: Bool = false
     var creationDate: Date = Date()
 
     // ✅ Updated initializer
@@ -35,7 +34,6 @@ struct SavingsJar: Identifiable, Codable, Hashable {
         color: String,
         icon: String,
         transactions: [SavingsTransaction] = [],
-        showInWidget: Bool = false, // ← Add this line
         creationDate: Date = Date()
     ) {
         self.id = id
@@ -45,7 +43,6 @@ struct SavingsJar: Identifiable, Codable, Hashable {
         self.color = color
         self.icon = icon
         self.transactions = transactions
-        self.showInWidget = showInWidget // ← and this
         self.creationDate = creationDate
     }
 }

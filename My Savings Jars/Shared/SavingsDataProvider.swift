@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WidgetKit
 
 class SavingsDataProvider {
     static let shared = SavingsDataProvider()
@@ -42,6 +43,31 @@ class SavingsDataProvider {
             print("✅ Saved \(jars.count) jars to shared container")
         } catch {
             print("❌ Failed to encode jars: \(error)")
+        }
+    }
+    
+    func loadJar(matching id: UUID) -> WidgetJarData? {
+        let all = load()
+        print("🔍 Looking for jar with ID: \(id.uuidString)")
+        
+        for jar in all {
+            print("   - Available Jar: \(jar.name), ID: \(jar.id.uuidString)")
+        }
+
+        if let match = all.first(where: { $0.id == id }) {
+            print("✅ Found match: \(match.name)")
+            return WidgetJarData(
+                id: match.id,
+                name: match.name,
+                currentAmount: match.currentAmount,
+                targetAmount: match.targetAmount,
+                color: match.color,
+                icon: match.icon,
+                progressPercentage: match.targetAmount > 0 ? match.currentAmount / match.targetAmount : 0.0
+            )
+        } else {
+            print("❌ No matching jar found.")
+            return nil
         }
     }
 }

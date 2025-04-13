@@ -31,18 +31,21 @@ class SavingsViewModel: ObservableObject {
     func addSavingsJar(_ jar: SavingsJar) {
         savingsJars.append(jar)
         saveJars()
+        SavingsDataProvider.shared.save(savingsJars)
     }
 
     func updateSavingsJar(updatedJar: SavingsJar) {
         if let index = savingsJars.firstIndex(where: { $0.id == updatedJar.id }) {
             savingsJars[index] = updatedJar
             saveJars()
+            SavingsDataProvider.shared.save(savingsJars)
         }
     }
 
     func deleteSavingsJar(at offsets: IndexSet) {
         savingsJars.remove(atOffsets: offsets)
         saveJars()
+        SavingsDataProvider.shared.save(savingsJars)
     }
 
     func addSavingsTransaction(jar: SavingsJar, amount: Double, note: String, isDeposit: Bool) {
@@ -112,18 +115,5 @@ class SavingsViewModel: ObservableObject {
             self.savingsJars = jars
             print("📥 Loaded jars from UserDefaults")
         }
-    }
-
-    // MARK: - Widget Selection
-
-    func isWidgetJarSelected(_ id: UUID) -> Bool {
-        return savingsJars.first(where: { $0.id == id })?.showInWidget ?? false
-    }
-
-    func selectWidgetJar(_ id: UUID) {
-        for i in savingsJars.indices {
-            savingsJars[i].showInWidget = (savingsJars[i].id == id)
-        }
-        saveJars()
     }
 }

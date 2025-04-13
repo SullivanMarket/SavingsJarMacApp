@@ -14,7 +14,6 @@ struct EditJarView: View {
     @State private var targetAmount: String
     @State private var selectedColor: String
     @State private var selectedIcon: String
-    @State private var showInWidget: Bool
 
     let colors = ["blue", "purple", "red", "green", "orange", "yellow"]
     let icons = [
@@ -38,7 +37,6 @@ struct EditJarView: View {
         self._targetAmount = State(initialValue: "\(jar.targetAmount)")
         self._selectedColor = State(initialValue: jar.color)
         self._selectedIcon = State(initialValue: jar.icon)
-        self._showInWidget = State(initialValue: jar.showInWidget)
     }
 
     var body: some View {
@@ -75,9 +73,6 @@ struct EditJarView: View {
                     .onReceive(targetAmount.publisher.collect()) {
                         targetAmount = String($0.prefix(10)).filter { "0123456789.".contains($0) }
                     }
-
-                Toggle("Show in Small Widget", isOn: $showInWidget)
-                    .padding(.top, 5)
 
                 VStack(spacing: 2) {
                     Text("Color")
@@ -197,7 +192,6 @@ struct EditJarView: View {
             color: selectedColor,
             icon: selectedIcon,
             transactions: jar.transactions,
-            showInWidget: showInWidget,
             creationDate: jar.creationDate
         )
 

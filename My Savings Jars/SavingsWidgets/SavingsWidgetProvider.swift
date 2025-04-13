@@ -7,50 +7,38 @@
 
 import WidgetKit
 import SwiftUI
-import Foundation
 
-struct SavingsWidgetProvider: TimelineProvider {
-
+struct SavingsWidgetProvider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> SavingsWidgetEntry {
-        print("📦 Placeholder called - showing sample")
-        return SavingsWidgetEntry(date: Date(), widgetData: WidgetData.sample, eligibleJars: WidgetData.sample.allJars)
+        let now = Date()
+        return SavingsWidgetEntry(date: now, jar: nil, jars: [], timestamp: now)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SavingsWidgetEntry) -> Void) {
-        let widgetData = AppGroupFileManager.shared.getWidgetData()
-        let eligibleJars = widgetData.allJars.filter { $0.showInWidget }
-
-        let selectedJars: [SavingsJar]
-        if context.family == .systemMedium {
-            selectedJars = Array(eligibleJars.prefix(2))
-        } else if context.family == .systemLarge {
-            selectedJars = Array(eligibleJars.prefix(4))
-        } else {
-            selectedJars = Array(eligibleJars.prefix(1))
+    func snapshot(for configuration: SelectJarIntent, in context: Context) async -> SavingsWidgetEntry {
+        let selectedJars = (configuration.jars ?? []).compactMap { entity in
+            SavingsDataProvider.shared.loadJar(matching: entity.id)
         }
 
-        let entry = SavingsWidgetEntry(date: Date(), widgetData: WidgetData(allJars: selectedJars, selectedJar: selectedJars.first), eligibleJars: selectedJars)
-        print("📸 Snapshot (\(context.family)) with \(selectedJars.count) jars")
-        completion(entry)
+        let firstJar = selectedJars.first
+        let now = Date()
+
+        return SavingsWidgetEntry(date: now, jar: firstJar, jars: selectedJars, timestamp: now)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SavingsWidgetEntry>) -> Void) {
-        let widgetData = AppGroupFileManager.shared.getWidgetData()
-        let eligibleJars = widgetData.allJars.filter { $0.showInWidget }
-
-        var entries: [SavingsWidgetEntry] = []
-        let currentDate = Date()
-
-        for i in 0..<eligibleJars.count {
-            let jar = eligibleJars[i]
-            let entryDate = Calendar.current.date(byAdding: .minute, value: i * 15, to: currentDate)!
-            let entryData = WidgetData(allJars: widgetData.allJars, selectedJar: jar)
-            let entry = SavingsWidgetEntry(date: entryDate, widgetData: entryData, eligibleJars: eligibleJars)
-            entries.append(entry)
+    func timeline(for configuration: SelectJarIntent, in context: Context) async -> Timeline<SavingsWidgetEntry> {
+        let selectedJars = (configuration.jars ?? []).compactMap { entity in
+            SavingsDataProvider.shared.loadJar(matching: entity.id)
         }
 
-        print("📦 Timeline generated with \(entries.count) entries.")
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
+        let now = Date()
+        let entry = SavingsWidgetEntry(
+            date: now,
+            jar: selectedJars.first,
+            jars: selectedJars,
+            timestamp: now
+        )
+
+        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: now)!
+        return Timeline(entries: [entry], policy: .after(nextUpdate))
     }
 }

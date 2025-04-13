@@ -5,7 +5,6 @@
 //  Created by Sean Sullivan on 4/1/25.
 //
 
-// WidgetJarData.swift
 import Foundation
 
 struct WidgetJarData: Identifiable, Codable, Hashable {
@@ -16,4 +15,16 @@ struct WidgetJarData: Identifiable, Codable, Hashable {
     let color: String
     let icon: String
     let progressPercentage: Double
+}
+
+extension WidgetJarData {
+    static let sample = WidgetJarData(
+        id: UUID(),
+        name: "Vacation",
+        currentAmount: 750,
+        targetAmount: 2000,
+        color: "blue",
+        icon: "airplane",
+        progressPercentage: 0.375
+    )
 }
